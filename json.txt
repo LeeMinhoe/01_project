@@ -1,0 +1,16 @@
+{
+  "Data": [
+    {
+      "Type": "int",
+      "Value": 36
+    },
+    {
+      "Type": "float",
+      "Value": 3.14
+    },
+    {
+      "Type": "str",
+      "Value": "What the... fuck"
+    }
+  ]
+}
