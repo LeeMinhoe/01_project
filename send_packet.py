@@ -1,7 +1,6 @@
 import socket
 import json
 import pickle
-import input
 
 
 def ReadJson(json_file_name):
@@ -62,19 +61,3 @@ def send_packet_UDP_pk(Pkt):
 	#print(data2)
 
 
-
-
-def run():
-	packet = input.inputModule()
-
-	print()
-
-	#packet.print_packet_info()
-
-	print()
-
-	#send_packet_TCP_pk(packet)
-	send_packet_UDP_pk(packet)
-
-if __name__ == "__main__":
-	run()
