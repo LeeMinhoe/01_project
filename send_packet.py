@@ -44,16 +44,37 @@ def send_packet_TCP_pk(Pkt):
 	#print(data2)
 
 
+	# case 1 pickle _ in UDP
+def send_packet_UDP_pk(Pkt):
+	DS = ReadJson(Pkt.Data_part.json_file_name)
+
+	message = pickle.dumps(DS)
+
+	HOST=Pkt.Header_part.dst_ip
+	PORT=Pkt.Header_part.dst_port
+	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+	s.sendto(message, (HOST, PORT))
+	data, addr=s.recvfrom(1024)  
+	#print(data)
+
+	data2 = pickle.loads(data)
+	#print(data2)
+
+
+
+
 def run():
 	packet = input.inputModule()
 
 	print()
 
-	packet.print_packet_info()
+	#packet.print_packet_info()
 
 	print()
 
-	send_packet_TCP_pk(packet)
+	#send_packet_TCP_pk(packet)
+	send_packet_UDP_pk(packet)
 
 if __name__ == "__main__":
 	run()
