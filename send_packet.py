@@ -45,6 +45,8 @@ def send_packet_TCP_pk(Pkt):
 
 	# case 1 pickle _ in UDP
 def send_packet_UDP_pk(Pkt):
+	#DataStructure
+	#DS is json format
 	DS = ReadJson(Pkt.Data_part.json_file_name)
 
 	message = pickle.dumps(DS)
