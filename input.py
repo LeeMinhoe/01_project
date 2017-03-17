@@ -1,9 +1,3 @@
-#
-#
-#
-#
-
-
 
 import json
 
@@ -55,8 +49,14 @@ class Packet:
 def inputModule():
 	dst_ip = input("Destination IP address : ")
 	dst_port = input("Destination Port address : ")
-	protocol = input("Protocol : ")
-	isRandom = input(" Is Packet Rand Data? : ") # yes or no
+	while(1):
+		protocol = input("Protocol : ")
+		if protocol == 'UDP' or protocol == 'TCP':
+			break
+	while(1):
+		isRandom = input(" Is Packet Rand Data? : ") # yes or no
+		if isRandom == 'yes' or isRandom == 'no':
+			break
 	pps = input(" N packet / sec : ")
 	json_file_name = input("json file name is : ")
 	
@@ -69,19 +69,3 @@ def inputModule():
 
 
 
-
-
-# 입력 모듈의 전체적인 메인 함수
-def run():
-	packet = inputModule()
-
-	print()
-
-	packet.print_packet_info()
-
-	print()
-
-	DS = ReadJson(packet.Data_part.json_file_name)#
-
-if __name__ == "__main__":
-	run()
