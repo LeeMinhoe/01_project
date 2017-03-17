@@ -21,7 +21,7 @@ class Packet_Data:
 	# 초기화
 	def __init__(self, isRandom, pps, json_file_name):
 		self.isRandom = isRandom
-		self.pps = pps
+		self.pps = int(pps)
 		self.json_file_name = json_file_name
 	# Packet 데이터 부분 출력문
 	def print_Data_info(self):
