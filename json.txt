@@ -1,16 +1,1 @@
-{
-  "Data": [
-    {
-      "Type": "int",
-      "Value": 36
-    },
-    {
-      "Type": "float",
-      "Value": 3.14
-    },
-    {
-      "Type": "str",
-      "Value": "What the... fuck"
-    }
-  ]
-}
+{"employees":[{"Type":"int","value":1},{"Type":"float","value":3.14},{"Type":"str","value":"Hi"}]}
