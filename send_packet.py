@@ -35,11 +35,11 @@ def send_packet_TCP_pk(Pkt):
 	s.connect((HOST,PORT))
 
 	s.send(message)
-	data=s.recv(1024)
+	#data=s.recv(1024)
 
 	s.close()
 
-	data2 = pickle.loads(data)
+	#data2 = pickle.loads(data)
 	#print(data2)
 
 
@@ -54,10 +54,10 @@ def send_packet_UDP_pk(Pkt):
 	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 	s.sendto(message, (HOST, PORT))
-	data, addr=s.recvfrom(1024)  
+	#data, addr=s.recvfrom(1024)  
 	#print(data)
 
-	data2 = pickle.loads(data)
+	#data2 = pickle.loads(data)
 	#print(data2)
 
 
