@@ -33,8 +33,8 @@ def ReadJson(Pkt):
 	if Pkt.Data_part.isRandom == 'yes':
 		DataStructure = rand_json(DataStructure)
 	
-	print(DataStructure)
-	print()
+	#print(DataStructure)
+	#print()
 
 	return DataStructure
 
@@ -55,13 +55,17 @@ def send_packet_TCP_pk(Pkt):
 	#print(HOST)
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((HOST,PORT))
-	
-	for i in range(0, Pkt.Data_part.pps):
-		s.send(message)
-	#data=s.recv(1024)
 
-	s.close()
+	try:
+		s.connect((HOST,PORT))
+	
+		for i in range(0, Pkt.Data_part.pps):
+			s.send(message)
+		#data=s.recv(1024)
+
+		s.close()
+	except:
+		print("non 3-handshke / only send ack")
 
 	#data2 = pickle.loads(data)
 	#print(data2)
@@ -79,7 +83,7 @@ def send_packet_UDP_pk(Pkt):
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	
-	for i in range(0, Pkt.Data_part.pps):
+	for i in range(0, Pkt.Data_part.pps+1):
 		s.sendto(message, (HOST, PORT))
 	#data, addr=s.recvfrom(1024)  
 	#print(data)
