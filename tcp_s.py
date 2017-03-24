@@ -2,8 +2,8 @@
 #### TCP recv server ####
 
 import socket
-import pickle
 import json
+import struct
 
 data_r=''
 HOST='192.168.56.129'
@@ -24,8 +24,13 @@ while True:
 	#conn.send(data)
 	data_r = data
 
-#print(data_r)
-print(pickle.loads(data_r))
+print(data_r)
+print()
 
+value = list(struct.unpack('if3s', data_r))
+value[2] = value[2].decode("ascii")
+
+print(value)
+print()
 conn.close()
 

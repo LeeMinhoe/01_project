@@ -1,85 +1,93 @@
 
 import json
+import os
 
-
+#############################################################
 # Packet의 해더 관련 부분 Class
+#############################################################
 class Packet_Header:
-	# 초기화
+	# 초기화 함수
 	def __init__(self, dst_ip, dst_port, protocol):
-		self.dst_ip = dst_ip
-		self.dst_port = int(dst_port)
-		self.protocol = protocol
-	# Packet 해더 부분 출력문
+		self.dst_ip = dst_ip										##str Type
+		self.dst_port = int(dst_port)								##int Type
+		self.protocol = protocol									##str Type
+	# Packet Header info 출력문
 	def print_Header_info(self):
-		print("IP address : ", self.dst_ip)
-		print("port address : ", self.dst_port)
-		print("protocol : ", self.protocol)
+		print("* IP address : ", self.dst_ip)
+		print("* port address : ", self.dst_port)
+		print("* protocol : ", self.protocol)
+#############################################################
 
-
+#############################################################
 # Packet의 데이터 관련 부분 Class
+#############################################################
 class Packet_Data:
 	# 초기화
-	def __init__(self, isRandom, pps, json_file_name):
-		self.isRandom = isRandom
-		self.pps = int(pps)
-		self.json_file_name = json_file_name
-	# Packet 데이터 부분 출력문
+	def __init__(self, isRandom, pps, json_file_name, DataField):
+		self.isRandom = isRandom									##str Type
+		self.pps = int(pps)											##int Type
+		self.json_file_name = json_file_name						##str Type
+		self.DataField = DataField									##List Type
+	# Packet Data info 출력문
 	def print_Data_info(self):
-		print("is Random : ", self.isRandom)
-		print("pps : ", self.pps)
-		print("json_file_name : ", self.json_file_name)
+		print("* is Random : ", self.isRandom)
+		print("* pps : ", self.pps)
+		print("* json_file_name : ", self.json_file_name)
+		print("* Data Field in Json")
+		print(self.DataField)
+		print("##########################")
+#############################################################
 
 
+#############################################################
 # Packet Class : Header + Data
+# 해더와 데이터 부분을 더한 클래스
+#############################################################
 class Packet:
 	# 초기화
 	def __init__(self, Header_part, Data_part):
-		self.Header_part = Header_part
-		self.Data_part = Data_part
-	# Packet 정보 출력문
+		self.Header_part = Header_part								##Class Type
+		self.Data_part = Data_part									##Class Type
+	# Packet Info 출력문
 	def print_packet_info(self):
+		print("######################")
+		print("####Packet Info.######")
+		print("######################")
 		self.Header_part.print_Header_info()
 		self.Data_part.print_Data_info()
+#############################################################
 
-
-
-
-# 입력 인자 받는 함수
-# 예외처리 필요 : 각 입력(json 파일 이름 제외)에 대한 범위 설정 하여 예외처리
+#############################################################
+# Json file 에서 패킷 정보를 읽어오는 함수
+#############################################################
 def inputModule(jsonf):
-	#dst_ip = input("Destination IP address : ")
-	#dst_port = input("Destination Port address : ")
-	#while(1):
-	#	protocol = input("Protocol : ")
-	#	if protocol == 'UDP' or protocol == 'TCP':
-	#		break
-	#while(1):
-	#	isRandom = input(" Is Packet Rand Data? : ") # yes or no
-	#	if isRandom == 'yes' or isRandom == 'no':
-	#		break
-	#pps = input(" N packet / sec : ")
-	#json_file_name = input("json file name is : ")
 	json_file_name = jsonf
 
-	return initHead(json_file_name)	
+	print()
+	print("######################")
+	print("#### Program Start####")
+	print("######################")
+	Jsonpwd = os.getcwd() + '/99_JSON'
+	print("Target Path : " + Jsonpwd + '/' + jsonf)
+	os.chdir(Jsonpwd)
 
-def initHead(json_file_name):
-	with open(json_file_name) as data_file:
-		DataStructure = json.load(data_file)
-
-	dst_ip = DataStructure["Header"][0]["IP"]
-	dst_port = DataStructure["Header"][0]["Port"]
-	protocol = DataStructure["Header"][0]["Protocol"]
-	isRandom = DataStructure["Header"][0]["isRandom"]
-	pps = DataStructure["Header"][0]["pps"]
-
-	header_p = Packet_Header(dst_ip, dst_port, protocol)
-	data_p = Packet_Data(isRandom, pps, json_file_name)
-	packet = Packet(header_p, data_p)
-
-	return packet
+	with open(json_file_name) as data_file:							# 입력한 json file 을 읽어서 
+		DataStructure = json.load(data_file)						# Pakcet의 Header 데이터,
+	dst_ip = DataStructure["Header"][0]["IP"]						# 전송에 필요한 option,
+	dst_port = DataStructure["Header"][0]["Port"]					# 데이터 부를 변수에 저장한다
+	protocol = DataStructure["Header"][0]["Protocol"]				#
+	isRandom = DataStructure["Header"][0]["isRandom"]				#
+	pps = DataStructure["Header"][0]["pps"]							#
+	Data = DataStructure["Data"]									#
+	
+	################################################
+	## Input Data Header / Data Option 범위 예외처리  ##					# 추가하기
+	################################################
 
 
+	header_p = Packet_Header(dst_ip, dst_port, protocol)			#
+	data_p = Packet_Data(isRandom, pps, json_file_name, Data)		# Class 초기화
+	packet = Packet(header_p, data_p)								#
 
-
-
+	return packet	
+#############################################################
