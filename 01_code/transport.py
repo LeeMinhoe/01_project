@@ -73,9 +73,7 @@ def send_packet_TCP_pk(Pkt):
 
 		
 	HOST=Pkt.Header_part.dst_ip
-	PORT=Pkt.Header_part.dst
-	
-	_port
+	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		
 	try:

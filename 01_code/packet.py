@@ -67,6 +67,7 @@ def inputModule(jsonf):
 	print("######################")
 	print("#### Program Start####")
 	print("######################")
+	os.chdir("..")
 	Jsonpwd = os.getcwd() + '/99_JSON'
 	print("Target Path : " + Jsonpwd + '/' + jsonf)
 	os.chdir(Jsonpwd)
