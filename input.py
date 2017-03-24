@@ -46,25 +46,39 @@ class Packet:
 
 # 입력 인자 받는 함수
 # 예외처리 필요 : 각 입력(json 파일 이름 제외)에 대한 범위 설정 하여 예외처리
-def inputModule():
-	dst_ip = input("Destination IP address : ")
-	dst_port = input("Destination Port address : ")
-	while(1):
-		protocol = input("Protocol : ")
-		if protocol == 'UDP' or protocol == 'TCP':
-			break
-	while(1):
-		isRandom = input(" Is Packet Rand Data? : ") # yes or no
-		if isRandom == 'yes' or isRandom == 'no':
-			break
-	pps = input(" N packet / sec : ")
-	json_file_name = input("json file name is : ")
-	
+def inputModule(jsonf):
+	#dst_ip = input("Destination IP address : ")
+	#dst_port = input("Destination Port address : ")
+	#while(1):
+	#	protocol = input("Protocol : ")
+	#	if protocol == 'UDP' or protocol == 'TCP':
+	#		break
+	#while(1):
+	#	isRandom = input(" Is Packet Rand Data? : ") # yes or no
+	#	if isRandom == 'yes' or isRandom == 'no':
+	#		break
+	#pps = input(" N packet / sec : ")
+	#json_file_name = input("json file name is : ")
+	json_file_name = jsonf
+
+	return initHead(json_file_name)	
+
+def initHead(json_file_name):
+	with open(json_file_name) as data_file:
+		DataStructure = json.load(data_file)
+
+	dst_ip = DataStructure["Header"][0]["IP"]
+	dst_port = DataStructure["Header"][0]["Port"]
+	protocol = DataStructure["Header"][0]["Protocol"]
+	isRandom = DataStructure["Header"][0]["isRandom"]
+	pps = DataStructure["Header"][0]["pps"]
+
 	header_p = Packet_Header(dst_ip, dst_port, protocol)
 	data_p = Packet_Data(isRandom, pps, json_file_name)
 	packet = Packet(header_p, data_p)
 
 	return packet
+
 
 
 

@@ -3,6 +3,29 @@ import json
 import pickle
 import string
 import random
+import struct
+import sys
+
+
+def Data_to_Pack(Json):
+
+	result = b''	
+		
+	Size = len(Json["Data"])
+	for i in range(0,Size):
+		if( Json["Data"][i]["Type"] == "int"):
+			result += struct.pack('<i',Json["Data"][i]["value"])
+		elif( Json["Data"][i]["Type"] == "float"):
+			result += struct.pack('<f',Json["Data"][i]["value"])
+		elif( Json["Data"][i]["Type"] == "str"):
+			option = '<' + str(len(Json["Data"][i]["value"])+1) + 's'
+			result += struct.pack(option, (Json["Data"][i]["value"]).encode('ascii'))
+		
+	
+	#print(result)
+
+	return result 
+
 
 def str_generator(size, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
@@ -13,7 +36,6 @@ def rand_json(JS):
 	t1 = 1073741823
 	t2 = 1073741823 * (-1)
 	Size = len(JSon["Data"])
-
 	for i in range(0,Size):
 		if( JSon["Data"][i]["Type"] == "int"):
 			JSon["Data"][i]["value"] = random.randint(t2,t1)
@@ -32,11 +54,12 @@ def ReadJson(Pkt):
 
 	if Pkt.Data_part.isRandom == 'yes':
 		DataStructure = rand_json(DataStructure)
-	
-	#print(DataStructure)
-	#print()
 
-	return DataStructure
+	#print(DataStructure)
+	#print()	
+
+	return Data_to_Pack(DataStructure)
+	
 
 
 	# case 1 pickle _ in TCP
@@ -44,31 +67,22 @@ def send_packet_TCP_pk(Pkt):
 	#DataStructure
 	#DS is json format
 	DS = ReadJson(Pkt)
-
-	#message is pickle format
-	message = pickle.dumps(DS)
-
-	#print(message)
-
-	#print(message)
+	
 	HOST=Pkt.Header_part.dst_ip
-	#print(HOST)
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+	
+	
 	try:
 		s.connect((HOST,PORT))
-	
-		for i in range(0, Pkt.Data_part.pps):
-			s.send(message)
+		
+		s.send(DS)
 		#data=s.recv(1024)
 
 		s.close()
 	except:
 		print("non 3-handshke / only send ack")
 
-	#data2 = pickle.loads(data)
-	#print(data2)
 
 
 	# case 1 pickle _ in UDP
@@ -77,18 +91,11 @@ def send_packet_UDP_pk(Pkt):
 	#DS is json format
 	DS = ReadJson(Pkt)
 
-	message = pickle.dumps(DS)
-
 	HOST=Pkt.Header_part.dst_ip
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	
 	for i in range(0, Pkt.Data_part.pps+1):
-		s.sendto(message, (HOST, PORT))
+		s.sendto(DS, (HOST, PORT))
 	#data, addr=s.recvfrom(1024)  
 	#print(data)
-
-	#data2 = pickle.loads(data)
-	#print(data2)
-
-

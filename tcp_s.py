@@ -7,6 +7,7 @@ import json
 
 data_r=''
 HOST='192.168.56.129'
+HOST='127.0.0.1'
 PORT=50007
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
