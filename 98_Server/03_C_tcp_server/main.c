@@ -49,6 +49,8 @@ int main(int argc, char **argv)
 	if( bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr) )==-1)
 		error_handling("bind() error");
  
+
+ while(1) {
 	if(listen(serv_sock, 5) == -1) 
 		error_handling("listen() error");
  
@@ -66,13 +68,15 @@ int main(int argc, char **argv)
 			
 	}
 
-	
-	
 	close(clnt_sock);      
 
 	ds = *((struct DS *)&message);
 
 	printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
+ }
+	
+	
+	
 	
 
 
