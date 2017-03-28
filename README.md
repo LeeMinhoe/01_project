@@ -52,11 +52,11 @@
 
 	]
 }
-	* IP is Logical address
-	* Port is port address
-	* Protocol choice TCP or UDP
-	* pps is packet per second
-	* isRandom is "Data's value is random?"
-	* Type is { short, unsigned short, int, unsigned int, float, double, str } to value
-	* except Type is { __Bool(bool), signed char(Integer), unsigned char(Integer), void*(Integer) }
-	* Hold Type is { char, long, unsigned long, long long, unsigned long long }
+	1) IP is Logical address
+	2) Port is port address
+	3) Protocol choice TCP or UDP
+	4) pps is packet per second
+	5) isRandom is "Data's value is random?"
+	6) Type is { short, unsigned short, int, unsigned int, float, double, str } to value
+	7) except Type is { __Bool(bool), signed char(Integer), unsigned char(Integer), void*(Integer) }
+	8) Hold Type is { char, long, unsigned long, long long, unsigned long long }
