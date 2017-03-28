@@ -14,8 +14,21 @@ void error_handling(char *message);
 
 struct DS
 {
+	/*
 	int i;
 	float f;
+	char str[3];
+	
+	char c[2];
+	
+	double h;
+	*/
+	short s;
+	unsigned short us;
+	int i;
+	unsigned int ui;
+	float f;
+	double d;
 	char str[3];
 };
 
@@ -50,33 +63,32 @@ int main(int argc, char **argv)
 		error_handling("bind() error");
  
 
- while(1) {
-	if(listen(serv_sock, 5) == -1) 
-		error_handling("listen() error");
+	 while(1) {
+		if(listen(serv_sock, 5) == -1) 
+			error_handling("listen() error");
  
-	clnt_addr_size = sizeof(clnt_addr);
+		clnt_addr_size = sizeof(clnt_addr);
           
-	clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
-	if(clnt_sock == -1)
-		error_handling("accept() error");
+		clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
+		if(clnt_sock == -1)
+			error_handling("accept() error");
  
 
 
-	while( (str_len = read(clnt_sock, message, BUFSIZE)) != 0) {
-		write(clnt_sock, message, str_len);
-		//write(1, message, str_len);
+		while( (str_len = read(clnt_sock, message, BUFSIZE)) != 0) {
+			write(clnt_sock, message, str_len);
+			//write(1, message, str_len);
 			
-	}
+		}
 
-	close(clnt_sock);      
+		close(clnt_sock);      
+		fflush(stdin);
+		ds = *((struct DS *)&message);
 
-	ds = *((struct DS *)&message);
+		//printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
+		printf("\n %d, %hd, %d, %o, %f, %lf, %s\n", ds.s, ds.us, ds.i, ds.ui, ds.f, ds.d, ds.str);
 
-	printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
- }
-	
-	
-	
+	 }
 	
 
 
@@ -89,6 +101,3 @@ void error_handling(char *message)
 	fputc('\n', stderr);
 	exit(1);
 }
-
-
-
