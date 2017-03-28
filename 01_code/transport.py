@@ -4,6 +4,7 @@ import string
 import random
 import struct
 import sys
+from color import *
 
 
 #############################################################
@@ -30,7 +31,11 @@ def Data_to_Pack(Json):
 		elif( Json[i]["Type"] == "str"):
 			option = '<' + str(len(Json[i]["value"])+1) + 's'
 			result += struct.pack(option, (Json[i]["value"]).encode('ascii'))
-
+		
+		else : # 현 프로그램에서 정의되지 않은 전송 데이터 형 , 형변환을 못함
+			printe(" [ " + Json[i]["Type"] + " ]")
+			printe("Upper Type is undefined type")
+			return False
 	return result 
 #############################################################
 
@@ -44,6 +49,8 @@ def str_generator(size, chars=string.ascii_uppercase + string.digits):
 #############################################################
 #############################################################
 # Data struture 를 Rand 하게 만드는 function
+# 추후에 업데이트 해야함
+# Error 처리도 업데이트 이후
 #############################################################
 def rand_json(JS):
 	
@@ -76,6 +83,12 @@ def send_packet_TCP_pk(Pkt):
 		DataStructure = rand_json(Pkt.Data_part.DataField)
 	
 	DS = Data_to_Pack(DataStructure)
+	
+	# Error
+	# Undefined Data Type -> packing fail
+	if DS == False :
+		printe("mistaken file name : " + Pkt.Data_part.json_file_name)
+		exit(1)
 
 	#print(DS)
 
@@ -92,7 +105,7 @@ def send_packet_TCP_pk(Pkt):
 
 		s.close()
 	except:
-		print("non 3-handshke / only send ack")
+		printe("non 3-handshke / only send ack")
 #################################################################
 
 #################################################################
