@@ -1,6 +1,7 @@
 
 import json
 import os
+from color import *
 
 #############################################################
 # Packet의 해더 관련 부분 Class
@@ -8,9 +9,9 @@ import os
 class Packet_Header:
 	# 초기화 함수
 	def __init__(self, dst_ip, dst_port, protocol):
-		self.dst_ip = dst_ip										##str Type
-		self.dst_port = int(dst_port)								##int Type
-		self.protocol = protocol									##str Type
+		self.dst_ip = dst_ip
+		self.dst_port = int(dst_port)
+		self.protocol = protocol
 	# Packet Header info 출력문
 	def print_Header_info(self):
 		print("* IP address : ", self.dst_ip)
@@ -24,10 +25,10 @@ class Packet_Header:
 class Packet_Data:
 	# 초기화
 	def __init__(self, isRandom, pps, json_file_name, DataField):
-		self.isRandom = isRandom									##str Type
-		self.pps = int(pps)											##int Type
-		self.json_file_name = json_file_name						##str Type
-		self.DataField = DataField									##List Type
+		self.isRandom = isRandom
+		self.pps = int(pps)
+		self.json_file_name = json_file_name
+		self.DataField = DataField
 	# Packet Data info 출력문
 	def print_Data_info(self):
 		print("* is Random : ", self.isRandom)
@@ -46,8 +47,8 @@ class Packet_Data:
 class Packet:
 	# 초기화
 	def __init__(self, Header_part, Data_part):
-		self.Header_part = Header_part								##Class Type
-		self.Data_part = Data_part									##Class Type
+		self.Header_part = Header_part
+		self.Data_part = Data_part
 	# Packet Info 출력문
 	def print_packet_info(self):
 		print("######################")
@@ -70,24 +71,61 @@ def inputModule(jsonf):
 	Jsonpwd = os.getcwd() + '/../99_JSON'
 	print("Target Path : " + Jsonpwd + '/' + jsonf)
 	os.chdir(Jsonpwd)
-
-	with open(json_file_name) as data_file:							# 입력한 json file 을 읽어서 
-		DataStructure = json.load(data_file)						# Pakcet의 Header 데이터,
-	dst_ip = DataStructure["Header"][0]["IP"]						# 전송에 필요한 option,
-	dst_port = DataStructure["Header"][0]["Port"]					# 데이터 부를 변수에 저장한다
-	protocol = DataStructure["Header"][0]["Protocol"]				#
-	isRandom = DataStructure["Header"][0]["isRandom"]				#
-	pps = DataStructure["Header"][0]["pps"]							#
-	Data = DataStructure["Data"]									#
 	
-	################################################
-	## Input Data Header / Data Option 범위 예외처리  ##					# 추가하기
-	################################################
+	try :
+			
+		with open(json_file_name) as data_file:							# 입력한 json file 을 읽어서 
+			DataStructure = json.load(data_file)						# Pakcet의 Header 데이터,
 
+		dst_ip = DataStructure["Header"][0]["IP"]						# 전송에 필요한 option,
+		dst_port = DataStructure["Header"][0]["Port"]					# 데이터 부를 변수에 저장한다
+		protocol = DataStructure["Header"][0]["Protocol"]				#
+		isRandom = DataStructure["Header"][0]["isRandom"]				#
+		pps = DataStructure["Header"][0]["pps"]							#
+		Data = DataStructure["Data"]									#
+	
+		header_p = Packet_Header(dst_ip, dst_port, protocol)			#
+		data_p = Packet_Data(isRandom, pps, json_file_name, Data)		# Class 초기화
+		packet = Packet(header_p, data_p)								#
 
-	header_p = Packet_Header(dst_ip, dst_port, protocol)			#
-	data_p = Packet_Data(isRandom, pps, json_file_name, Data)		# Class 초기화
-	packet = Packet(header_p, data_p)								#
+		return packet
 
-	return packet	
+	###################################
+	########### 예외처리 List ############
+	###################################
+	# 파일을 찾을 수 없을 때 일어남 / no file
+	except FileNotFoundError as e:
+		printe("error #1")
+		print()
+		printe(str(e))
+		print()
+		exit(1)
+	###################################
+	# 변수 초기화할때 일어남
+	except KeyError as e:
+		printe("error #2")
+		print()
+		printe("KeyError : " + str(e))
+		printe("modify " + jsonf)
+		print()
+		exit(1)
+	###################################
+	# 존재하지 않는 변수에 접근 시 일어나는 에러
+	except UnboundLocalError as e:
+		printe("error #3")
+		print()
+		printe(e)
+		print()
+		exit(1)	
+	###################################
+	# Json file 안의 value가 없을 때
+	# Json format이 잘못되었을때
+	# json file의 잘못된 위치도 error string으로 알려줌
+	except json.decoder.JSONDecodeError as e:
+		print()
+		printe(str(e))
+		print()
+		exit(1)
+	###################################
+
 #############################################################
