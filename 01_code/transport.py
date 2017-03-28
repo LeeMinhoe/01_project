@@ -15,10 +15,18 @@ def Data_to_Pack(Json):
 	
 	Size = len(Json)
 	for i in range(0,Size):
-		if( Json[i]["Type"] == "int"):
+		if( Json[i]["Type"] == "short"):
+			result += struct.pack('<h',Json[i]["value"])
+		elif( Json[i]["Type"] == "unsigned short"):
+			result += struct.pack('<H',Json[i]["value"])
+		elif( Json[i]["Type"] == "int"):
 			result += struct.pack('<i',Json[i]["value"])
+		elif( Json[i]["Type"] == "unsigned int"):
+			result += struct.pack('<I',Json[i]["value"])
 		elif( Json[i]["Type"] == "float"):
 			result += struct.pack('<f',Json[i]["value"])
+		elif( Json[i]["Type"] == "double"):
+			result += struct.pack('<d',Json[i]["value"])
 		elif( Json[i]["Type"] == "str"):
 			option = '<' + str(len(Json[i]["value"])+1) + 's'
 			result += struct.pack(option, (Json[i]["value"]).encode('ascii'))
