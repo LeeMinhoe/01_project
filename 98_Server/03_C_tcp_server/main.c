@@ -31,6 +31,30 @@ struct DS
 	double d;
 	char str[3];
 };
+struct D1
+{
+	char c1[11];
+	char c2[9];
+	char c3[6];
+	char c4[10];
+	char c5[7];
+	char c6[17];
+	int i;
+	float f;
+
+};
+#pragma pack(push, atin_data_definition, 1)
+struct D2
+{
+	char c1[3];
+	int i;
+};
+#pragma pack(pop, atin_data_definition)
+struct D3
+{
+	char c1[128];
+	int i;
+};
 
 int main(int argc, char **argv)
 {
@@ -38,13 +62,17 @@ int main(int argc, char **argv)
 	int clnt_sock;
 	char message[BUFSIZE];
 	int str_len;
-	int i;
+	int i=1;
  
 	struct sockaddr_in serv_addr;
 	struct sockaddr_in clnt_addr;
 	int clnt_addr_size;
 	struct DS ds;
+	struct D1 d1;
+	struct D2 d2;
+	struct D3 d3;
 	
+	printf("%d\n", sizeof(d2));
 	if(argc != 2) {
 		printf("Usage : &s <port>\n", argv[0]);
 		exit(1);
@@ -76,18 +104,34 @@ int main(int argc, char **argv)
 
 
 		while( (str_len = read(clnt_sock, message, BUFSIZE)) != 0) {
-			write(clnt_sock, message, str_len);
+			//write(clnt_sock, message, str_len);
 			//write(1, message, str_len);
+			//printf("%s %d\n", message, i);
+			
+
 			
 		}
-
+		
 		close(clnt_sock);      
 		fflush(stdin);
-		ds = *((struct DS *)&message);
+		//ds = *((struct DS *)&message);
+		if (i == 1)
+		{
+			d1 = *((struct D1 *)&message);
+			printf("\n %s, %s, %s, %s, %s, %s, %d, %f\n", d1.c1, d1.c2, d1.c3, d1.c4, d1.c5, d1.c6, d1.i, d1.f);
+		}
+		if (i == 2)
+		{
+
+			d3 = *((struct D3 *)&message);
+			printf("\n [D3 is] \n %s %d\n", d3.c1, d3.i);
+			d2 = *((struct D2 *)&message);
+			printf("\n [D2 is] \n %s %d\n", d2.c1, d2.i);
+		}
 
 		//printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
-		printf("\n %d, %hd, %d, %o, %f, %lf, %s\n", ds.s, ds.us, ds.i, ds.ui, ds.f, ds.d, ds.str);
-
+		//printf("\n %d, %hd, %d, %o, %f, %lf, %s\n", ds.s, ds.us, ds.i, ds.ui, ds.f, ds.d, ds.str);
+		i++;
 	 }
 	
 

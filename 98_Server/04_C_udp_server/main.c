@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
 	int str_len;
 	socklen_t clnt_adr_sz;
 	
-	int i;
+	int i=1;
+	char outm[BUF_SIZE];
 	struct DS ds;
 
 	struct sockaddr_in serv_adr, clnt_adr;
@@ -49,12 +50,16 @@ int main(int argc, char *argv[])
 	{
 		clnt_adr_sz=sizeof(clnt_adr);
 		str_len=recvfrom(serv_sock, message, BUF_SIZE, 0, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
-		printf("%s\n", message);
-		sendto(serv_sock, message, str_len, 0, (struct sockaddr*)&clnt_adr, clnt_adr_sz);
-
-		ds = *((struct DS *)&message);
-		printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
+		
+		//ds = *((struct DS *)&message);
+		
+		//sendto(serv_sock, message, str_len, 0, (struct sockaddr*)&clnt_adr, clnt_adr_sz);
+		//printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
+		printf("%s %d\n", message, i);
+		i++;
 	}	
+	
+	printf("\n%d %f %s\n", ds.i, ds.f, ds.str);
 	close(serv_sock);
 	return 0;
 }
