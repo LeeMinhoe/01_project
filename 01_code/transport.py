@@ -86,6 +86,8 @@ def send_P(sock, data, roof):
 
 	for i in range(int(roof/2)):
 		sock.send(data)
+		if i%50 == 0 :
+			time.sleep(0.1)
 		#sock.sendto(data.encode('utf-8'), (HOST, PORT))
 	return	
 
@@ -143,7 +145,7 @@ def send_packet_TCP_pk(Pkt):
 	
 	
 
-	roof = 1
+	roof = 500
 	choose = 1
 	# Single Thread / Single Process
 	if choose == 1:

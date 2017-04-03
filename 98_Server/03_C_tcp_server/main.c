@@ -46,7 +46,7 @@ struct D1
 #pragma pack(push, atin_data_definition, 1)
 struct D2
 {
-	char c1[3];
+	char c1[154];
 	int i;
 };
 #pragma pack(pop, atin_data_definition)
