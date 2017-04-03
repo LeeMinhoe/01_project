@@ -1,6 +1,6 @@
 
 from header import *
-
+from threading import Thread
 def run():
 	
 	Pkt = []
@@ -57,16 +57,47 @@ def run():
 
 ###################### Transmission Packet ########################################
 	# print Info / Send Packet
-	for i in range(0, optionNum):
-		Pkt[i].print_packet_info()
+	th_p = []
+	if len(Pkt) == 1:
+		for i in range(0, len(Pkt)):
+			Pkt[i].print_packet_info()
 		
-		print()
+			print()
 
-		if Pkt[i].Header_part.protocol == 'TCP':
-			send_packet_TCP_pk(Pkt[i])
-		elif Pkt[i].Header_part.protocol == 'UDP':
-			send_packet_UDP_pk(Pkt[i])
+			if Pkt[i].Header_part.protocol == 'TCP':
+				send_packet_TCP_pk(Pkt[i])
+			elif Pkt[i].Header_part.protocol == 'UDP':
+				send_packet_UDP_pk(Pkt[i])
+	
+	else :
+		
+		for i in range(0, len(Pkt)):
+			Pkt[i].print_packet_info()
+
+			print()
+
+			if Pkt[i].Header_part.protocol == 'TCP':
+				th = Thread(target=th_f, args=(Pkt[i], ))
+				th.start()
+				th_p.append(th)
+
+			elif Pkt[i].Header_part.protocol == 'UDP':
+				th = Thread(target=th_f, args=(Pkt[i], ))
+				th.start()
+				th_p.append(th)
+
+		for th in th_p:
+			th.join()
+		
+
 ############################################3######################################
+def th_f(pkt):
+	if pkt.Header_part.protocol == 'TCP':
+		send_packet_TCP_pk(pkt)
+	elif pkt.Header_part.protocol == 'UDP':
+		send_packet_UDP_pk(pkt)
+
+	return
 
 
 if __name__ == "__main__":
