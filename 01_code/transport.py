@@ -32,7 +32,7 @@ def Data_to_Pack(Json):
 		elif( Json[i]["Type"] == "double"):
 			result += struct.pack('<d',Json[i]["value"])
 		elif( Json[i]["Type"] == "str"):
-			print(len(Json[i]["value"]))
+			#print(len(Json[i]["value"]))
 			option = '<' + str(len(Json[i]["value"])+1) + 's'
 			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
 		
@@ -78,22 +78,14 @@ def rand_json(JS):
 #############################################################
 #*************************************************************
 
+def send_P_T(sock, data, roof):
 
-
-
-
-def send_P(sock, data, roof):
-
-	for i in range(int(roof/2)):
+	for i in range(int(roof)):
 		sock.send(data)
 		if i%50 == 0 :
 			time.sleep(0.1)
 		#sock.sendto(data.encode('utf-8'), (HOST, PORT))
 	return	
-
-
-
-
 
 #################################################################
 #	# TCP packet Send function
@@ -114,7 +106,6 @@ def send_packet_TCP_pk(Pkt):
 		exit(1)
 
 	#print(DS)
-
 		
 	HOST=Pkt.Header_part.dst_ip
 	PORT=Pkt.Header_part.dst_port
@@ -143,41 +134,46 @@ def send_packet_TCP_pk(Pkt):
 		print()
 		exit(1)
 	
-	
+	# dummy
+	if Pkt.Data_part.pps >= 100:
+		choose = 2
+	else :
+		choose = 1
 
-	roof = 500
-	choose = 1
+	roof = Pkt.Data_part.pps
+	
 	# Single Thread / Single Process
 	if choose == 1:
-		#for i=0 in range(Pkt.Data_part.pps):
-		#	send(DS)
-		for i in range(roof):
+		for i in range(0, roof):
 			s.send(DS)
 	# Muti Thread
 	elif choose == 2:
-		mt1 = Thread(target=send_P, args=(s, DS, roof))
-		mt2 = Thread(target=send_P, args=(s, DS, roof))
+		mt1 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
+		mt2 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
+		mt3 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
+		mt4 = Thread(target=send_P_T, args=(s, DS, int(roof/4) + roof%4))
 
 		mt1.start()
 		mt2.start()
+		mt3.start()
+		mt4.start()
 		mt1.join()
 		mt2.join()
-	# Muti Process
-	elif choose == 3:
-		mp1 = Process(target=send_P, args=(s, DS, roof))
-		mp2 = Process(target=send_P, args=(s, DS, roof))
-
-		mp1.start()
-		mp2.start()
-		mp1.join()
-		mp2.join()
-
-
-	#s.send(DS)
-	#data=s.recv(1024)
+		mt3.join()
+		mt4.join()
 
 	s.close()
 #################################################################
+
+
+def send_P_U(sock, data, HOST, PORT, roof):
+
+	for i in range(int(roof)):
+		sock.sendto(data, (HOST, PORT))
+		if i%50 == 0 :
+			time.sleep(0.1)
+
+	return	
 
 #################################################################
 #	# UDP packet Send function
@@ -195,11 +191,30 @@ def send_packet_UDP_pk(Pkt):
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	
-	for i in range(0, Pkt.Data_part.pps+1):
-		s.sendto(DS, (HOST, PORT))
-		
+	if Pkt.Data_part.pps >= 100:
+		choose = 2
+	else :
+		choose = 1
+	
+	roof = Pkt.Data_part.pps
 
-	# Data delivery acc
-	#data, addr=s.recvfrom(1024)  
-	#print(data)
+	if choose == 1:
+		for i in range(0, roof):
+			s.sendto(DS, (HOST, PORT))
+
+	elif choose == 2:
+		mt1 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
+		mt2 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
+		mt3 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
+		mt4 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4) + roof%4))
+
+		mt1.start()
+		mt2.start()
+		mt3.start()
+		mt4.start()
+		mt1.join()
+		mt2.join()
+		mt3.join()
+		mt4.join()
+
 #################################################################
