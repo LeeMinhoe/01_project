@@ -115,16 +115,13 @@ int main(int argc, char **argv)
 		close(clnt_sock);      
 		fflush(stdin);
 		//ds = *((struct DS *)&message);
-		if (i == 1)
+		if (i % 2 == 1)
 		{
 			d1 = *((struct D1 *)&message);
 			printf("\n %s, %s, %s, %s, %s, %s, %d, %f\n", d1.c1, d1.c2, d1.c3, d1.c4, d1.c5, d1.c6, d1.i, d1.f);
 		}
-		if (i == 2)
+		if (i % 2 == 0)
 		{
-
-			d3 = *((struct D3 *)&message);
-			printf("\n [D3 is] \n %s %d\n", d3.c1, d3.i);
 			d2 = *((struct D2 *)&message);
 			printf("\n [D2 is] \n %s %d\n", d2.c1, d2.i);
 		}
