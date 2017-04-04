@@ -88,7 +88,9 @@ def run():
 
 		for th in th_p:
 			th.join()
-		
+	
+	for pkt in Pkt:
+		makelog(pkt)
 
 ############################################3######################################
 def th_f(pkt):
