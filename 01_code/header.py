@@ -5,3 +5,4 @@ from packet import *
 from transport import *
 from color import *
 from threading import Thread
+from log import *
