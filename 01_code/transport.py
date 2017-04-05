@@ -94,11 +94,12 @@ def send_packet_TCP_pk(Pkt):
 
 	DataStructure = Pkt.Data_part.DataField
 
-	if Pkt.Data_part.isRandom == 'yes':
-		DataStructure = rand_json(Pkt.Data_part.DataField)
-	
-	DS = Data_to_Pack(DataStructure)
-	
+	#if Pkt.Data_part.isRandom == 'yes':
+	#	DataStructure = rand_json(Pkt.Data_part.DataField)
+	DS = []
+	for i in range(len(DataStructure)):
+		DS.append(Data_to_Pack(DataStructure[i]))
+
 	# Error
 	# Undefined Data Type -> packing fail
 	if DS == False :
@@ -134,33 +135,34 @@ def send_packet_TCP_pk(Pkt):
 		print()
 		exit(1)
 	
-	# dummy
-	if Pkt.Data_part.pps >= 100:
-		choose = 2
-	else :
-		choose = 1
+	for ds in DS:
+		# dummy
+		if Pkt.Data_part.pps >= 100:
+			choose = 2
+		else :
+			choose = 1
 
-	roof = Pkt.Data_part.pps
+		roof = Pkt.Data_part.pps
 	
-	# Single Thread / Single Process
-	if choose == 1:
-		for i in range(0, roof):
-			s.send(DS)
-	# Muti Thread
-	elif choose == 2:
-		mt1 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
-		mt2 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
-		mt3 = Thread(target=send_P_T, args=(s, DS, int(roof/4)))
-		mt4 = Thread(target=send_P_T, args=(s, DS, int(roof/4) + roof%4))
+		# Single Thread / Single Process
+		if choose == 1:
+			for i in range(0, roof):
+				s.send(ds)
+		# Muti Thread
+		elif choose == 2:
+			mt1 = Thread(target=send_P_T, args=(s, ds, int(roof/4)))
+			mt2 = Thread(target=send_P_T, args=(s, ds, int(roof/4)))
+			mt3 = Thread(target=send_P_T, args=(s, ds, int(roof/4)))
+			mt4 = Thread(target=send_P_T, args=(s, ds, int(roof/4) + roof%4))
 
-		mt1.start()
-		mt2.start()
-		mt3.start()
-		mt4.start()
-		mt1.join()
-		mt2.join()
-		mt3.join()
-		mt4.join()
+			mt1.start()
+			mt2.start()
+			mt3.start()
+			mt4.start()
+			mt1.join()
+			mt2.join()
+			mt3.join()
+			mt4.join()
 
 	s.close()
 #################################################################
