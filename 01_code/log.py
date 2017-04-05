@@ -11,10 +11,7 @@ def makelog(Pkt):
 	filepath = logDirPWD + filename
 	nowDate = now.strftime('%Y-%m-%d')
 	
-	print(os.getcwd())
-
-	os.chdir(logDirPWD)
-	
+	os.chdir(logDirPWD)	
 	
 	f = open(filename, 'a')
 	
@@ -30,7 +27,3 @@ def makelog(Pkt):
 
 	f.close()
 	
-
-
-
-
