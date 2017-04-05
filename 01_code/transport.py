@@ -106,8 +106,6 @@ def send_packet_TCP_pk(Pkt):
 		printe("mistaken file name : " + Pkt.Data_part.json_file_name)
 		exit(1)
 
-	#print(DS)
-		
 	HOST=Pkt.Header_part.dst_ip
 	PORT=Pkt.Header_part.dst_port
 	s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -184,10 +182,12 @@ def send_packet_UDP_pk(Pkt):
 
 	DataStructure = Pkt.Data_part.DataField
 
-	if Pkt.Data_part.isRandom == 'yes':
-		DataStructure = rand_json(Pkt.Data_part.DataField)
+	#if Pkt.Data_part.isRandom == 'yes':
+	#	DataStructure = rand_json(Pkt.Data_part.DataField)
 	
-	DS = Data_to_Pack(DataStructure)
+	DS = []
+	for i in range(len(DataStructure)):
+		DS.append(Data_to_Pack(DataStructure[i]))
 
 	HOST=Pkt.Header_part.dst_ip
 	PORT=Pkt.Header_part.dst_port
@@ -200,23 +200,24 @@ def send_packet_UDP_pk(Pkt):
 	
 	roof = Pkt.Data_part.pps
 
-	if choose == 1:
-		for i in range(0, roof):
-			s.sendto(DS, (HOST, PORT))
+	for ds in DS:
+		if choose == 1:
+			for i in range(0, roof):
+				s.sendto(ds, (HOST, PORT))
 
-	elif choose == 2:
-		mt1 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
-		mt2 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
-		mt3 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4)))
-		mt4 = Thread(target=send_P_U, args=(s, DS, HOST, PORT, int(roof/4) + roof%4))
+		elif choose == 2:
+			mt1 = Thread(target=send_P_U, args=(s, ds, HOST, PORT, int(roof/4)))
+			mt2 = Thread(target=send_P_U, args=(s, ds, HOST, PORT, int(roof/4)))
+			mt3 = Thread(target=send_P_U, args=(s, ds, HOST, PORT, int(roof/4)))
+			mt4 = Thread(target=send_P_U, args=(s, ds, HOST, PORT, int(roof/4) + roof%4))
 
-		mt1.start()
-		mt2.start()
-		mt3.start()
-		mt4.start()
-		mt1.join()
-		mt2.join()
-		mt3.join()
-		mt4.join()
+			mt1.start()
+			mt2.start()
+			mt3.start()
+			mt4.start()
+			mt1.join()
+			mt2.join()
+			mt3.join()
+			mt4.join()
 
 #################################################################

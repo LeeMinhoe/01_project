@@ -1,16 +1,25 @@
-
 from header import *
 from threading import Thread
 import optparse
 
+def th_f(pkt):
+	if pkt.Header_part.protocol == 'TCP':
+		send_packet_TCP_pk(pkt)
+	elif pkt.Header_part.protocol == 'UDP':
+		send_packet_UDP_pk(pkt)
+	return
+
 def run():
 	
-	parser = optparse.OptionParser()
+	parser = optparse.OptionParser('main.py -f/m/d <target>')
 	parser.add_option("-f", "--file", dest="target_file_name", help="target is json file name", metavar="TARGET")
 	parser.add_option("-m", "--multi", dest="target_mdirectory_name", help="target is name of directory / N session", metavar="TARGET")
 	parser.add_option("-d", "--directory", dest="target_directory_name", help="target is name of directory that has \"header.json\"", metavar="TARGET")
 
 	(options, args) = parser.parse_args()
+	if len(sys.argv)-1 == 0:
+		print(parser.usage)
+		exit(1)
 
 	Pkt = []
 	
@@ -19,7 +28,7 @@ def run():
 		Pkt.append(inputModule(options.target_file_name, "."))
 
 	#2 -m : multi
-	if options.target_mdirectory_name != None:
+	elif options.target_mdirectory_name != None:
 		fileList = []
 		for file in os.listdir(os.getcwd() + '/../99_JSON/' + options.target_mdirectory_name):
 			if file.endswith(".json"):
@@ -29,21 +38,17 @@ def run():
 			os.chdir(os.getcwd() + '/..')
 
 	#3 -d : direcotory
-	if options.target_directory_name != None:
+	elif options.target_directory_name != None:
 		Pkt.append(inputModule("header.json", options.target_directory_name))
 		os.chdir(os.getcwd() + '/..')
+	
+	# Pkt List is empty	
+	if len(Pkt) == 0:
+		printe("There is no Json file!")
+		printe("Check 99_JSON directory")
+		exit(1)
 
-
-	############### ERROR #2 ################
-	# Pkt List is empty						#
-	if len(Pkt) == 0:						#
-		printe("There is no Json file!")	#
-		printe("Check 99_JSON directory")	#
-		exit(1)								#
-	#########################################
-
-
-###################### Transmission Packet ########################################
+	# Transmission Packet
 	# print Info / Send Packet
 	th_p = []
 	
@@ -67,16 +72,6 @@ def run():
 	
 	for pkt in Pkt:
 		makelog(pkt)
-
-############################################3######################################
-def th_f(pkt):
-	if pkt.Header_part.protocol == 'TCP':
-		send_packet_TCP_pk(pkt)
-	elif pkt.Header_part.protocol == 'UDP':
-		send_packet_UDP_pk(pkt)
-
-	return
-
 
 if __name__ == "__main__":
 	run()

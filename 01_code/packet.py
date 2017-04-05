@@ -1,11 +1,9 @@
-
 import json
 import os
 from color import *
 
 #############################################################
 # Packet의 해더 관련 부분 Class
-#############################################################
 class Packet_Header:
 	# 초기화 함수
 	def __init__(self, dst_ip, dst_port, protocol):
@@ -21,7 +19,6 @@ class Packet_Header:
 
 #############################################################
 # Packet의 데이터 관련 부분 Class
-#############################################################
 class Packet_Data:
 	# 초기화
 	def __init__(self, isRandom, pps, json_file_name, DataField):
@@ -43,7 +40,6 @@ class Packet_Data:
 #############################################################
 # Packet Class : Header + Data
 # 해더와 데이터 부분을 더한 클래스
-#############################################################
 class Packet:
 	# 초기화
 	def __init__(self, Header_part, Data_part):
@@ -60,7 +56,6 @@ class Packet:
 
 #############################################################
 # Json file 에서 패킷 정보를 읽어오는 함수
-#############################################################
 def inputModule(jsonf, d):
 	json_file_name = jsonf
 
@@ -72,14 +67,14 @@ def inputModule(jsonf, d):
 	
 	try :
 
-		with open(json_file_name) as data_file:							# 입력한 json file 을 읽어서 
-			DataStructure = json.load(data_file)						# Pakcet의 Header 데이터,
+		with open(json_file_name) as data_file:	
+			DataStructure = json.load(data_file)
 
-		dst_ip = DataStructure["Header"][0]["IP"]						# 전송에 필요한 option,
-		dst_port = DataStructure["Header"][0]["Port"]					# 데이터 부를 변수에 저장한다
-		protocol = DataStructure["Header"][0]["Protocol"]				#
-		isRandom = DataStructure["Header"][0]["isRandom"]				#
-		pps = DataStructure["Header"][0]["pps"]	
+		dst_ip = DataStructure["Header"][0]["IP"]
+		dst_port = DataStructure["Header"][0]["Port"]
+		protocol = DataStructure["Header"][0]["Protocol"]
+		isRandom = DataStructure["Header"][0]["isRandom"]
+		pps = DataStructure["Header"][0]["pps"]
 		
 		Data = []
 		if jsonf == "header.json":
@@ -94,15 +89,13 @@ def inputModule(jsonf, d):
 		else :
 			Data.append(DataStructure["Data"])
 	
-		header_p = Packet_Header(dst_ip, dst_port, protocol)			#
-		data_p = Packet_Data(isRandom, pps, json_file_name, Data)		# Class 초기화
-		packet = Packet(header_p, data_p)								#
+		header_p = Packet_Header(dst_ip, dst_port, protocol)
+		data_p = Packet_Data(isRandom, pps, json_file_name, Data)
+		packet = Packet(header_p, data_p)
 		
 		return packet
 
-	###################################
 	########### 예외처리 List ############
-	###################################
 	# 파일을 찾을 수 없을 때 일어남 / no file
 	except FileNotFoundError as e:
 		printe("error #1")
@@ -110,7 +103,6 @@ def inputModule(jsonf, d):
 		printe(str(e))
 		print()
 		exit(1)
-	###################################
 	# 변수 초기화할때 일어남
 	except KeyError as e:
 		printe("error #2")
@@ -119,7 +111,6 @@ def inputModule(jsonf, d):
 		printe("modify " + jsonf)
 		print()
 		exit(1)
-	###################################
 	# 존재하지 않는 변수에 접근 시 일어나는 에러
 	except UnboundLocalError as e:
 		printe("error #3")
@@ -127,7 +118,6 @@ def inputModule(jsonf, d):
 		printe(e)
 		print()
 		exit(1)	
-	###################################
 	# Json file 안의 value가 없을 때
 	# Json format이 잘못되었을때
 	# json file의 잘못된 위치도 error string으로 알려줌
@@ -136,6 +126,3 @@ def inputModule(jsonf, d):
 		printe(str(e))
 		print()
 		exit(1)
-	###################################
-
-#############################################################
