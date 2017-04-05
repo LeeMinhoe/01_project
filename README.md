@@ -1,3 +1,8 @@
+
+- project name : EventPacketGenerator ver 1.0.0
+
+- version is 1.0.0
+
 - Development Environment
 	* OS : centos 6.8
 	* PL : Python3.5
