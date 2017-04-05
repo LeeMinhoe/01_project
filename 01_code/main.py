@@ -1,50 +1,38 @@
 
 from header import *
 from threading import Thread
+import optparse
+
 def run():
 	
+	parser = optparse.OptionParser()
+	parser.add_option("-f", "--file", dest="target_file_name", help="target is json file name", metavar="TARGET")
+	parser.add_option("-m", "--multi", dest="target_mdirectory_name", help="target is name of directory / N session", metavar="TARGET")
+	parser.add_option("-d", "--directory", dest="target_directory_name", help="target is name of directory that has \"header.json\"", metavar="TARGET")
+
+	(options, args) = parser.parse_args()
+
 	Pkt = []
-	optionNum = len(sys.argv) - 1
+	
+	#1 -f : single
+	if options.target_file_name != None:
+		Pkt.append(inputModule(options.target_file_name, "."))
 
-	##################################### ERROR #1 ######################################
-	# No input parameter																#
-	if len(sys.argv) - 1 == 0:															#
-		printe("Usage : python3.5 " + sys.argv[0] + " "  + "< json files or direcoty >")#
-		#print("Check 99_JSON directory")												#
-		exit(1)																			#
-	#####################################################################################
-
-############################ Create Packet class List ###################################
-	#1 input is '*.json files in ./99_JSON Directory
-	if optionNum == 1 and argv[1] == '*.json' :
-		optionNum = 0
+	#2 -m : multi
+	if options.target_mdirectory_name != None:
 		fileList = []
-		for file in os.listdir(os.getcwd() + '/../99_JSON'):
+		for file in os.listdir(os.getcwd() + '/../99_JSON/' + options.target_mdirectory_name):
 			if file.endswith(".json"):
 				fileList.append(file)
-				optionNum = optionNum + 1
-		for i in range(0, optionNum):
-			Pkt.append(inputModule(fileList[i]))
+		for f in fileList:		
+			Pkt.append(inputModule(f, options.target_mdirectory_name))
+			os.chdir(os.getcwd() + '/..')
 
-	#2 input is Directory name 
-	elif optionNum == 1 and os.path.isdir(os.getcwd() + '/../99_JSON/' + argv[1]):
-		optionNum = 0
-		fileList = []
-		for file in os.listdir(os.getcwd() + '/../99_JSON/' + argv[1]):
-			if file.endswith(".json"):
-				fileList.append(file)
-				optionNum = optionNum + 1
-		for i in range(0, optionNum):
-			Pkt.append(inputModule(fileList[i]))
+	#3 -d : direcotory
+	if options.target_directory_name != None:
+		Pkt.append(inputModule("header.json", options.target_directory_name))
+		os.chdir(os.getcwd() + '/..')
 
-	#3,4 input is single transport / multi transport
-	else : 	
-		for i in range(1, optionNum + 1):
-			Pkt.append(inputModule(argv[i]))
-#########################################################################################
-
-	#print(Pkt)
-	#print()
 
 	############### ERROR #2 ################
 	# Pkt List is empty						#
@@ -58,36 +46,24 @@ def run():
 ###################### Transmission Packet ########################################
 	# print Info / Send Packet
 	th_p = []
-	if len(Pkt) == 1:
-		for i in range(0, len(Pkt)):
-			Pkt[i].print_packet_info()
-		
-			print()
-
-			if Pkt[i].Header_part.protocol == 'TCP':
-				send_packet_TCP_pk(Pkt[i])
-			elif Pkt[i].Header_part.protocol == 'UDP':
-				send_packet_UDP_pk(Pkt[i])
 	
-	else :
-		
-		for i in range(0, len(Pkt)):
-			Pkt[i].print_packet_info()
+	for i in range(0, len(Pkt)):
+		Pkt[i].print_packet_info()
 
-			print()
+		print()
 
-			if Pkt[i].Header_part.protocol == 'TCP':
-				th = Thread(target=th_f, args=(Pkt[i], ))
-				th.start()
-				th_p.append(th)
+		if Pkt[i].Header_part.protocol == 'TCP':
+			th = Thread(target=th_f, args=(Pkt[i], ))
+			th.start()
+			th_p.append(th)
 
-			elif Pkt[i].Header_part.protocol == 'UDP':
-				th = Thread(target=th_f, args=(Pkt[i], ))
-				th.start()
-				th_p.append(th)
+		elif Pkt[i].Header_part.protocol == 'UDP':
+			th = Thread(target=th_f, args=(Pkt[i], ))
+			th.start()
+			th_p.append(th)
 
-		for th in th_p:
-			th.join()
+	for th in th_p:
+		th.join()
 	
 	for pkt in Pkt:
 		makelog(pkt)
@@ -104,3 +80,4 @@ def th_f(pkt):
 
 if __name__ == "__main__":
 	run()
+
