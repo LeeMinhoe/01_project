@@ -1,0 +1,41 @@
+{
+  "Header": [
+    {
+      "IP": "127.0.0.1",
+      "Port": 50007,
+      "Protocol": "TCP",
+      "pps": 1,
+      "isRandom": "no"
+    }
+  ],
+  "Data": [
+    {
+      "Type": "short",
+      "value": -10
+    },
+    {
+      "Type": "unsigned short",
+      "value": 10
+    },
+    {
+      "Type": "int",
+      "value": -100
+    },
+    {
+      "Type": "unsigned int",
+      "value": 100
+    },
+    {
+      "Type": "float",
+      "value": 3.14
+    },
+    {
+      "Type": "double",
+      "value": 3.141592
+    },
+    {
+      "Type": "str",
+      "value": "Hi"
+    }
+  ]
+}
