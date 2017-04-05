@@ -61,19 +61,17 @@ class Packet:
 #############################################################
 # Json file 에서 패킷 정보를 읽어오는 함수
 #############################################################
-def inputModule(jsonf):
+def inputModule(jsonf, d):
 	json_file_name = jsonf
 
-	print()
-	print("######################")
-	print("#### Program Start####")
-	print("######################")
-	Jsonpwd = os.getcwd() + '/../99_JSON'
-	print("Target Path : " + Jsonpwd + '/' + jsonf)
+
+
+	Jsonpwd = os.getcwd() + '/../99_JSON/' + d
+	print("# Target Path : " + Jsonpwd + '/' + jsonf)
 	os.chdir(Jsonpwd)
 	
 	try :
-			
+
 		with open(json_file_name) as data_file:							# 입력한 json file 을 읽어서 
 			DataStructure = json.load(data_file)						# Pakcet의 Header 데이터,
 
@@ -81,13 +79,25 @@ def inputModule(jsonf):
 		dst_port = DataStructure["Header"][0]["Port"]					# 데이터 부를 변수에 저장한다
 		protocol = DataStructure["Header"][0]["Protocol"]				#
 		isRandom = DataStructure["Header"][0]["isRandom"]				#
-		pps = DataStructure["Header"][0]["pps"]							#
-		Data = DataStructure["Data"]									#
+		pps = DataStructure["Header"][0]["pps"]	
+		
+		Data = []
+		if jsonf == "header.json":
+			dataList = []
+			for data in os.listdir(os.getcwd()):
+				if data.endswith(".json") and data != "header.json":
+					dataList.append(data)
+			for data in dataList:
+				with open(data) as data_file:
+					DS = json.load(data_file)
+				Data.append(DS["Data"])
+		else :
+			Data.append(DataStructure["Data"])
 	
 		header_p = Packet_Header(dst_ip, dst_port, protocol)			#
 		data_p = Packet_Data(isRandom, pps, json_file_name, Data)		# Class 초기화
 		packet = Packet(header_p, data_p)								#
-
+		
 		return packet
 
 	###################################
