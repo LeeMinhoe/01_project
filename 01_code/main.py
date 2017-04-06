@@ -48,6 +48,11 @@ def run():
 		printe("Check 99_JSON directory")
 		exit(1)
 
+	# Rand to value module
+	for p in Pkt:
+		RandToValue(p.Data_part.DataField)
+
+
 	# Transmission Packet
 	# print Info / Send Packet
 	th_p = []
@@ -58,11 +63,13 @@ def run():
 		print()
 
 		if Pkt[i].Header_part.protocol == 'TCP':
+			#send_packet_TCP_pk(Pkt[i])
 			th = Thread(target=th_f, args=(Pkt[i], ))
 			th.start()
 			th_p.append(th)
 
 		elif Pkt[i].Header_part.protocol == 'UDP':
+			#send_packet_UDP_pk(Pkt[i])
 			th = Thread(target=th_f, args=(Pkt[i], ))
 			th.start()
 			th_p.append(th)
