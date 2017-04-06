@@ -8,6 +8,7 @@ from color import *
 from threading import Thread
 from multiprocessing import Process
 import time
+import datetime
 
 
 #############################################################
@@ -31,11 +32,34 @@ def Data_to_Pack(Json):
 			result += struct.pack('<f',Json[i]["value"])
 		elif( Json[i]["Type"] == "double"):
 			result += struct.pack('<d',Json[i]["value"])
+		elif( Json[i]["Type"] == "long long"):
+			result += struct.pack('<q',Json[i]["value"])
 		elif( Json[i]["Type"] == "str"):
 			#print(len(Json[i]["value"]))
-			option = '<' + str(len(Json[i]["value"])+1) + 's'
+			option = '<' + str(len(Json[i]["value"])) + 's'
 			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
+
+		elif( Json[i]["Type"] == "struct in_addr"):
+			result += socket.inet_aton(Json[i]["value"])
+			#print(socket.inet_aton(Json[i]["value"]))
+			#print(struct.unpack("i", socket.inet_aton(Json[i]["value"])))
 		
+		elif( Json[i]["Type"] == "time"):
+			if Json[i]["value"] == "now":
+				datet = int(time.time())
+			else :
+				datett = datetime.datetime.strptime(Json[i]["value"], '%Y-%m-%d %H:%M:%S')
+				datet = int(time.mktime(datet.timetuple()))
+			result += struct.pack('<i', datet)
+			
+		elif( Json[i]["Type"] == "hex"):
+			d = int(Json[i]["value"], 16)
+			result += struct.pack('<I', d)
+
+		elif( Json[i]["Type"] == "test"):			
+			print(type(Json[i]["value"]))
+			print(Json[i]["value"])
+
 		else : 
 			printe(" [ " + Json[i]["Type"] + " ]")
 			printe("Upper Type is undefined type")
