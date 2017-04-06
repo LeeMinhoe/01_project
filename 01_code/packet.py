@@ -31,8 +31,11 @@ class Packet_Data:
 		print("* is Random : ", self.isRandom)
 		print("* pps : ", self.pps)
 		print("* json_file_name : ", self.json_file_name)
-		print("* Data Field in Json")
-		print(self.DataField)
+		print("* Data Field in Json")	
+		for DS in self.DataField:
+			for data in DS:
+				print("    " + str(data))
+		#print(self.DataField)
 		print("##########################")
 #############################################################
 
