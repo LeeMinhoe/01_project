@@ -1,7 +1,5 @@
 import socket
 import json
-import string
-import random
 import struct
 import sys
 from color import *
@@ -45,18 +43,22 @@ def Data_to_Pack(Json):
 			#print(struct.unpack("i", socket.inet_aton(Json[i]["value"])))
 		
 		elif( Json[i]["Type"] == "time"):
-			if Json[i]["value"] == "now":
-				datet = int(time.time())
-			else :
+			if type(Json[i]["value"]) is str:
 				datett = datetime.datetime.strptime(Json[i]["value"], '%Y-%m-%d %H:%M:%S')
 				datet = int(time.mktime(datet.timetuple()))
+			elif type(Json[i]["value"]) is int :
+				datet = Json[i]["value"]
 			result += struct.pack('<i', datet)
 			
 		elif( Json[i]["Type"] == "hex"):
 			d = int(Json[i]["value"], 16)
 			result += struct.pack('<I', d)
 
-		elif( Json[i]["Type"] == "test"):			
+		elif( Json[i]["Type"] == "MAC addr"):
+			option = '<' + str(len(Json[i]["value"])) + 's'
+			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
+
+		elif( Json[i]["Type"] == "test"):
 			print(type(Json[i]["value"]))
 			print(Json[i]["value"])
 
@@ -70,37 +72,6 @@ def Data_to_Pack(Json):
 
 	return result 
 #############################################################
-
-
-#**********************Random Part****************************
-#############################################################
-# string random 생성기 : 원하는 size 만큼의 string을 생성한다.
-#############################################################
-def str_generator(size, chars=string.ascii_uppercase + string.digits):
-	return ''.join(random.choice(chars) for _ in range(size))
-#############################################################
-#############################################################
-# Data struture 를 Rand 하게 만드는 function
-# 추후에 업데이트 해야함
-# Error 처리도 업데이트 이후
-#############################################################
-def rand_json(JS):
-	
-	JSon = JS
-	t1 = 1073741823
-	t2 = 1073741823 * (-1)
-	Size = len(JSon)
-	for i in range(0,Size):
-		if( JSon[i]["Type"] == "int"):
-			JSon[i]["value"] = random.randint(t2,t1)
-		elif( JSon[i]["Type"] == "float"):
-			JSon[i]["value"] = random.uniform(t2,t1)
-		elif( JSon[i]["Type"] == "str"):
-			JSon[i]["value"] = str_generator(len(JSon[i]["value"]))
-
-	return JSon
-#############################################################
-#*************************************************************
 
 def send_P_T(sock, data, roof):
 
@@ -118,8 +89,6 @@ def send_packet_TCP_pk(Pkt):
 
 	DataStructure = Pkt.Data_part.DataField
 
-	#if Pkt.Data_part.isRandom == 'yes':
-	#	DataStructure = rand_json(Pkt.Data_part.DataField)
 	DS = []
 	for i in range(len(DataStructure)):
 		DS.append(Data_to_Pack(DataStructure[i]))
@@ -206,9 +175,6 @@ def send_packet_UDP_pk(Pkt):
 
 	DataStructure = Pkt.Data_part.DataField
 
-	#if Pkt.Data_part.isRandom == 'yes':
-	#	DataStructure = rand_json(Pkt.Data_part.DataField)
-	
 	DS = []
 	for i in range(len(DataStructure)):
 		DS.append(Data_to_Pack(DataStructure[i]))
