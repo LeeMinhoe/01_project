@@ -15,6 +15,7 @@
 	2) multi packet transport :		ex) python3.5 main.py json1.json json2.json json3.json
 	  json1, json2, json3 packet transport
 	3) *.json transport :			ex) python3.5 main.py *.json
+
 	  all json file in 99_JSON Directory
 	4) Target Directory transport :		ex) python3.5 main.py TCP
 	  TCP is Directory
@@ -26,7 +27,7 @@
 
  - Json file format :
 
-"'
+
 {
 	"Header":
 	[
@@ -59,7 +60,7 @@
 	]
 }
 
-"'
+
 	1) IP is Logical address
 	2) Port is port address
 	3) Protocol choice TCP or UDP
