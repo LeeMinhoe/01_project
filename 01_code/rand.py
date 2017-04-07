@@ -10,6 +10,9 @@ import socket
 def str_generator(size, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
 #############################################################
+
+
+#삭제 예정
 #############################################################
 # Data struture 를 Rand 하게 만드는 function
 # 추후에 업데이트 해야함
@@ -63,6 +66,7 @@ def RandToValue(DataStructure):
 
 			## is str
 			elif (Data["Type"] == "str"):
+				print("check")
 				if Data["value"] == 0 :
 					Data["value"] = str_generator(Data["str len"])
 				
@@ -111,8 +115,10 @@ def RandToValue(DataStructure):
 					r = hex(random.randint(min, max)).split('0x')[1]
 
 					if len(r) != 12:
+						print("check")
 						for i in range(12-len(r)):
 							r = '0' + r
+					
 					f = []
 					for i in range(6):
 						f.append(r[i*2:i*2+2])

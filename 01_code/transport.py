@@ -2,6 +2,7 @@ import socket
 import json
 import struct
 import sys
+import binascii
 from color import *
 from threading import Thread
 from multiprocessing import Process
@@ -34,8 +35,15 @@ def Data_to_Pack(Json):
 			result += struct.pack('<q',Json[i]["value"])
 		elif( Json[i]["Type"] == "str"):
 			#print(len(Json[i]["value"]))
-			option = '<' + str(len(Json[i]["value"])) + 's'
-			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
+			if type(Json[i]["value"]) is int :
+				result += struct.pack('<1s', str(chr(Json[i]["value"])).encode('utf-8'))
+
+			else :
+				if Json[i]["NULL"] == 'yes':
+					option = '<' + str(len(Json[i]["value"])+1) + 's'
+				elif Json[i]["NULL"] == 'no':
+					option = '<' + str(len(Json[i]["value"])) + 's'
+				result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
 
 		elif( Json[i]["Type"] == "struct in_addr"):
 			result += socket.inet_aton(Json[i]["value"])
@@ -55,12 +63,15 @@ def Data_to_Pack(Json):
 			result += struct.pack('<I', d)
 
 		elif( Json[i]["Type"] == "MAC addr"):
-			option = '<' + str(len(Json[i]["value"])) + 's'
-			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
+			macbytes = binascii.unhexlify(Json[i]["value"].replace(':', ''))
+			result += macbytes
+			#option = '<' + str(len(Json[i]["value"])) + 's'
+			#result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
 
-		elif( Json[i]["Type"] == "test"):
-			print(type(Json[i]["value"]))
-			print(Json[i]["value"])
+
+		#elif( Json[i]["Type"] == "test"):
+		#	print(type(Json[i]["value"]))
+		#	print(Json[i]["value"])
 
 		else : 
 			printe(" [ " + Json[i]["Type"] + " ]")
@@ -92,6 +103,7 @@ def send_packet_TCP_pk(Pkt):
 	DS = []
 	for i in range(len(DataStructure)):
 		DS.append(Data_to_Pack(DataStructure[i]))
+	
 
 	# Error
 	# Undefined Data Type -> packing fail
