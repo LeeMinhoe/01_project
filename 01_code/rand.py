@@ -73,7 +73,9 @@ def RandToValue(DataStructure):
 			## is hex
 			elif (Data["Type"] == "hex"):
 				if Data["value"] == "Random":
-					Data["value"] = hex(random.randint(int(Data["Random Min"], 16), int(Data["Random Max"], 16)))
+					print(Data["value"])
+					print(Data["Type"])
+					Data["value"] = hex(random.randint(int(Data["random min"], 16), int(Data["random max"], 16)))
 					
 					
 			## is MAC addr
@@ -112,9 +114,15 @@ def Converter(DataStructure):
 			if (Data["Type"] == "char" and type(Data["value"]) is int):
 				Data["value"] = chr(Data["value"])
 
-			elif (Data["Type"] == "time" :
+			elif Data["Type"] == "time" :
 				if Data["value"] == "now":
 					Data["value"] = int(time.time())
 				elif type(Data["value"]) is str:
 					d = datetime.datetime.strptime(Data["value"], '%Y-%m-%d %H:%M:%S')
 					Data["value"] = int(time.mktime(d.timetuple()))
+
+			elif Data["Type"] == "bool" :
+				if Data["value"] == 1:
+					Data["value"] = True
+				elif Data["value"] == 0:
+					Data["value"] = False
