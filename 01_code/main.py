@@ -47,10 +47,17 @@ def run():
 		printe("There is no Json file!")
 		printe("Check 99_JSON directory")
 		exit(1)
-
+	
+	print()
+	print(len(Pkt))
+	print()
 	# Rand to value module
+
 	for p in Pkt:
+		veri_type_checker(p.Data_part.DataField)
 		RandToValue(p.Data_part.DataField)
+		Converter(p.Data_part.DataField)
+		veri_range_checker(p.Data_part.DataField)
 
 
 	# Transmission Packet
