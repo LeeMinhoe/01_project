@@ -40,5 +40,6 @@ class Color:
 
 def printe(e) :
 	print(BG.red + e + BG.reset)
+	exit(1)
 
 #printe("fuck")
