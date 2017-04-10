@@ -19,12 +19,16 @@ def Data_to_Pack(Json):
 	
 	Size = len(Json)
 	for i in range(0,Size):
+
+		# C type
 		if( Json[i]["Type"] == "char"):
-			result += struct.pack('<c', Json[i]["value"])
+			result += struct.pack('<c', (Json[i]["value"]).encode('ascii'))
+		elif( Json[i]["Type"] == "signed char"):
+			result += struct.pack('<b', Json[i]["value"])
 		elif( Json[i]["Type"] == "unsigned char"):
-			result += struct.pack('<c', Json[i]["value"])
-		#elif( Json[i]["Type"] == "bool"):
-		#	result += struct.pack('<?', Json[i]["value"])
+			result += struct.pack('<B', Json[i]["value"])
+		elif( Json[i]["Type"] == "bool"):
+			result += struct.pack('<?', Json[i]["value"])
 		elif( Json[i]["Type"] == "short"):
 			result += struct.pack('<h', Json[i]["value"])
 		elif( Json[i]["Type"] == "unsigned short"):
@@ -45,46 +49,31 @@ def Data_to_Pack(Json):
 			result += struct.pack('<f', Json[i]["value"])
 		elif( Json[i]["Type"] == "double"):
 			result += struct.pack('<d', Json[i]["value"])
-
 		elif( Json[i]["Type"] == "str"):
-			if type(Json[i]["value"]) is int :
-				result += struct.pack('<1s', str(chr(Json[i]["value"])).encode('utf-8'))
+			option = '<' + str(Json[i]["str len"]) + 's'
+			result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
 
-			else :
-				if Json[i]["NULL"] == 'yes':
-					option = '<' + str(len(Json[i]["value"])+1) + 's'
-				elif Json[i]["NULL"] == 'no':
-					option = '<' + str(len(Json[i]["value"])) + 's'
-				result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
-
+		
+		# user define
 		elif( Json[i]["Type"] == "struct in_addr"):
 			result += socket.inet_aton(Json[i]["value"])
-			#print(socket.inet_aton(Json[i]["value"]))
-			#print(struct.unpack("i", socket.inet_aton(Json[i]["value"])))
 		
 		elif( Json[i]["Type"] == "time"):
-			if type(Json[i]["value"]) is str:
-				datett = datetime.datetime.strptime(Json[i]["value"], '%Y-%m-%d %H:%M:%S')
-				datet = int(time.mktime(datet.timetuple()))
-			elif type(Json[i]["value"]) is int :
-				datet = Json[i]["value"]
-			result += struct.pack('<i', datet)
+			#if type(Json[i]["value"]) is str:
+			#	datett = datetime.datetime.strptime(Json[i]["value"], '%Y-%m-%d %H:%M:%S')
+			#	datet = int(time.mktime(datett.timetuple()))
+			#elif type(Json[i]["value"]) is int :
+			#	datet = Json[i]["value"]
+			#result += struct.pack('<i', datet)
+			result += struct.pack('<i', Json[i]["value"])
 			
 		elif( Json[i]["Type"] == "hex"):
 			d = int(Json[i]["value"], 16)
-			result += struct.pack('<I', d)
+			result += struct.pack('<l', d)
 
 		elif( Json[i]["Type"] == "MAC addr"):
 			macbytes = binascii.unhexlify(Json[i]["value"].replace(':', ''))
 			result += macbytes
-			#option = '<' + str(len(Json[i]["value"])) + 's'
-			#result += struct.pack(option, (Json[i]["value"]).encode('utf-8'))
-
-
-		#elif( Json[i]["Type"] == "test"):
-		#	print(type(Json[i]["value"]))
-		#	print(Json[i]["value"])
-
 		else : 
 			printe(" [ " + Json[i]["Type"] + " ]")
 			printe("Upper Type is undefined type")
