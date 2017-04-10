@@ -1,0 +1,43 @@
+{
+  "Header": [
+    {
+      "IP": "10.0.1.28",
+      "Port": 7886,
+      "Protocol": "UDP",
+      "pps": 1,
+      "isRandom": "no"
+    }
+  ],
+  "Data": [
+    {
+      "comment": "1-1 v > l this error occur",
+      "Type": "str",
+      "value": "ipplusa",
+      "str len": 6
+    },
+    {
+      "comment": "1-2 v == l",
+      "Type": "str",
+      "value": "ipplus",
+      "str len": 6
+    },
+    {
+      "comment": "1-3 v < l",
+      "Type": "str",
+      "value": "ip",
+      "str len": 6
+    },
+    {
+      "comment": "2. list",
+      "Type": "str",
+      "value": ["ipplus", "js", "JS"],
+      "str len": 6
+    },
+    {
+      "comment": "3. list",
+      "Type": "str",
+      "value": ["ipplus", "js", "JS"],
+      "str len": 6
+    }
+  ]
+}

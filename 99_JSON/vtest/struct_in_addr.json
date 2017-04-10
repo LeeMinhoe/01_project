@@ -1,0 +1,35 @@
+{
+  "Header": [
+    {
+      "IP": "10.0.1.28",
+      "Port": 7886,
+      "Protocol": "UDP",
+      "pps": 1,
+      "isRandom": "no"
+    }
+  ],
+  "Data": [
+    {
+      "commment": "1. real value : local"
+      "Type": "struct in_addr",
+      "value": "127.0.0.1"
+    },
+    {
+      "commment": "2. list"
+      "Type": "struct in_addr",
+      "value": ["127.0.0.1", "163.152.219.191", "10.0.2.161"]
+    },
+    {
+      "commment": "3. Random"
+      "Type": "struct in_addr",
+      "value": "Random"
+    },
+    {
+      "commment": "4. random"
+      "Type": "struct in_addr",
+      "value": "random",
+      "addr min": "10.0.1.18",
+      "addr max": "10.0.1.20"
+    }
+  ]
+}
