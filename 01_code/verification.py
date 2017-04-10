@@ -34,7 +34,7 @@ def veri_type_checker(DataStructure):
 			or Data["Type"] == "short" or Data["Type"] == "unsigned short"
 			or Data["Type"] == "int" or Data["Type"] == "unsigned int"
 			or Data["Type"] == "long" or Data["Type"] == "unsigned long"
-			or Data["Type"] == "long long" or Data["Type"] == "unsinged long long"):
+			or Data["Type"] == "long long" or Data["Type"] == "unsigned long long"):
 				if type(Data["value"]) is int:
 					#print("Integer Ok");
 					pass
@@ -49,8 +49,11 @@ def veri_type_checker(DataStructure):
 					
 			# bool 1Byte
 			elif Data["Type"] == "bool":
-				if type(Data["value"]) is bool:
+				if Data["value"] == 1 or Data["value"] == 0:
 					#print("bool Ok");
+					pass
+				elif type(Data["value"]) is list:
+					#print("bool List Ok")
 					pass
 				else :
 					printe("bool input is wrong")
@@ -58,7 +61,7 @@ def veri_type_checker(DataStructure):
 			# FLOAT
 			# float		4Byte
 			# double	8Byte
-			elif Data["Type"] == "float" and Data["value"] == "double":
+			elif Data["Type"] == "float" or Data["Type"] == "double":
 				if type(Data["value"]) is float :
 					#print("Float Ok");
 					pass
@@ -127,7 +130,7 @@ def veri_type_checker(DataStructure):
 					pass
 				else :
 					printe("time input is wrong")
-			
+
 			# hex
 			elif Data["Type"] == "hex":
 				if type(Data["value"]) is str :
@@ -161,6 +164,8 @@ def veri_type_checker(DataStructure):
 			
 			# not define variable
 			else :
+				print(Data["Type"])
+				print(Data["value"])
 				printe("Not Define Variable")
 
 
@@ -263,6 +268,8 @@ def veri_range_checker(DataStructure):
 			# String NByte
 			elif Data["Type"] == "str":
 				if len(Data["value"]) > Data["str len"]:
+					print(Data["value"])
+					print(Data["str len"])
 					printe("too long value")
 				elif len(Data["value"]) == Data["str len"]:
 					#print("not null packing")
@@ -270,9 +277,13 @@ def veri_range_checker(DataStructure):
 				else :
 					#print("null packing")
 					pass
-
+	
 			# except float, double
 			# except struct in_addr, time, hex, Mac addr
+
+			else :
+				print(Data["Type"])
+				print(Data["value"])
 
 			
 
