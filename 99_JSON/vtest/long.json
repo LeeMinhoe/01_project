@@ -9,10 +9,15 @@
     }
   ],
   "Data": [
-    {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+    { 
+      "comment": "real value",
+      "Type": "long",
+      "value": 14
+    },
+    { 
+      "comment": "list",
+      "Type": "long",
+      "value": [14, 114, 1114]
     }
   ]
 }

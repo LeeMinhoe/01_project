@@ -10,9 +10,14 @@
   ],
   "Data": [
     {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+      "comment": "1. real value",
+      "Type": "MAC addr",
+      "value": "00:01:02:03:04:05"
+    },
+    {
+      "comment": "2. list",
+      "Type": "MAC addr",
+      "value": ["00:01:02:03:04:05", "10:21:32:43:54:65", "FF:FF:FF:FF:FF:FF"]
     }
   ]
 }

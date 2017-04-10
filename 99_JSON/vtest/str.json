@@ -12,7 +12,7 @@
     {
       "comment": "1-1 v > l this error occur",
       "Type": "str",
-      "value": "ipplusa",
+      "value": "ipplus",
       "str len": 6
     },
     {
@@ -34,9 +34,15 @@
       "str len": 6
     },
     {
-      "comment": "3. list",
+      "comment": "3. random",
       "Type": "str",
-      "value": ["ipplus", "js", "JS"],
+      "value": 5,
+      "str len": 6
+    },
+    {
+      "comment": "3. random",
+      "Type": "str",
+      "value": 6,
       "str len": 6
     }
   ]

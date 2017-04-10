@@ -8,11 +8,16 @@
       "isRandom": "no"
     }
   ],
-  "Data": [
+ "Data": [
     {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+      "comment": "float",
+      "Type": "float",
+      "value": 3.14
+    },
+    {
+      "comment": "list",
+      "Type": "float",
+      "value": [3.14, 3.1415, 3.141592]
     }
   ]
 }

@@ -9,10 +9,20 @@
     }
   ],
   "Data": [
-    {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+    { 
+      "comment": "real value",
+      "Type": "bool",
+      "value": 1
+    },
+    { 
+      "comment": "list",
+      "Type": "bool",
+      "value": 0
+    },
+    { 
+      "comment": "list",
+      "Type": "bool",
+      "value": [1, 0]
     }
   ]
 }

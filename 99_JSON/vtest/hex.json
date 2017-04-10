@@ -10,9 +10,21 @@
   ],
   "Data": [
     {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+      "comment": "1. real value",
+      "Type": "hex",
+      "value": "0x04"
+    },
+    {
+      "comment": "2. list",
+      "Type": "hex",
+      "value": ["0x03", "0x04", "0x05"]
+    },
+    {
+      "comment": "3. Random",
+      "Type": "hex",
+      "value": "Random",
+      "random min": "0x04",
+      "random max": "0x07"
     }
   ]
 }

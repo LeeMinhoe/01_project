@@ -10,9 +10,13 @@
   ],
   "Data": [
     {
-      "Type": "str",
-      "value": "ipplus",
-      "str len": 6
+      "Type": "char",
+      "value": "a"
+    },
+    { 
+      "comment": "list",
+      "Type": "char",
+      "value": [88, 89, 90]
     }
   ]
 }
