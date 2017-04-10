@@ -63,7 +63,7 @@ class Packet:
 def inputModule(jsonf, d):
 	json_file_name = jsonf
 
-
+	di = ''
 
 	Jsonpwd = os.getcwd() + '/../99_JSON/' + d
 	print("# Target Path : " + Jsonpwd + '/' + jsonf)
@@ -80,6 +80,7 @@ def inputModule(jsonf, d):
 		isRandom = DataStructure["Header"][0]["isRandom"]
 		pps = DataStructure["Header"][0]["pps"]
 		
+
 		Data = []
 		if jsonf == "header.json":
 			dataList = []
@@ -87,6 +88,7 @@ def inputModule(jsonf, d):
 				if data.endswith(".json") and data != "header.json":
 					dataList.append(data)
 			for data in dataList:
+				di = data
 				with open(data) as data_file:
 					DS = json.load(data_file)
 				Data.append(DS["Data"])
@@ -126,6 +128,8 @@ def inputModule(jsonf, d):
 	# Json format이 잘못되었을때
 	# json file의 잘못된 위치도 error string으로 알려줌
 	except json.decoder.JSONDecodeError as e:
+		print("error #4")
+		print("who : " + di)
 		print()
 		printe(str(e))
 		print()
