@@ -33,6 +33,7 @@ class Packet_Data:
 		print("* json_file_name : ", self.json_file_name)
 		print("* Data Field in Json")	
 		for DS in self.DataField:
+			print("#")
 			for data in DS:
 				print("    " + str(data))
 		#print(self.DataField)
