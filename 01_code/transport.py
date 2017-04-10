@@ -19,22 +19,34 @@ def Data_to_Pack(Json):
 	
 	Size = len(Json)
 	for i in range(0,Size):
-		if( Json[i]["Type"] == "short"):
-			result += struct.pack('<h',Json[i]["value"])
+		if( Json[i]["Type"] == "char"):
+			result += struct.pack('<c', Json[i]["value"])
+		elif( Json[i]["Type"] == "unsigned char"):
+			result += struct.pack('<c', Json[i]["value"])
+		#elif( Json[i]["Type"] == "bool"):
+		#	result += struct.pack('<?', Json[i]["value"])
+		elif( Json[i]["Type"] == "short"):
+			result += struct.pack('<h', Json[i]["value"])
 		elif( Json[i]["Type"] == "unsigned short"):
-			result += struct.pack('<H',Json[i]["value"])
+			result += struct.pack('<H', Json[i]["value"])
 		elif( Json[i]["Type"] == "int"):
-			result += struct.pack('<i',Json[i]["value"])
+			result += struct.pack('<i', Json[i]["value"])
 		elif( Json[i]["Type"] == "unsigned int"):
-			result += struct.pack('<I',Json[i]["value"])
-		elif( Json[i]["Type"] == "float"):
-			result += struct.pack('<f',Json[i]["value"])
-		elif( Json[i]["Type"] == "double"):
-			result += struct.pack('<d',Json[i]["value"])
+			result += struct.pack('<l', Json[i]["value"])
+		elif( Json[i]["Type"] == "long"):
+			result += struct.pack('<l', Json[i]["value"])
+		elif( Json[i]["Type"] == "unsigned long"):
+			result += struct.pack('<L', Json[i]["value"])
 		elif( Json[i]["Type"] == "long long"):
-			result += struct.pack('<q',Json[i]["value"])
+			result += struct.pack('<q', Json[i]["value"])
+		elif( Json[i]["Type"] == "unsigned long long"):
+			result += struct.pack('<Q', Json[i]["value"])
+		elif( Json[i]["Type"] == "float"):
+			result += struct.pack('<f', Json[i]["value"])
+		elif( Json[i]["Type"] == "double"):
+			result += struct.pack('<d', Json[i]["value"])
+
 		elif( Json[i]["Type"] == "str"):
-			#print(len(Json[i]["value"]))
 			if type(Json[i]["value"]) is int :
 				result += struct.pack('<1s', str(chr(Json[i]["value"])).encode('utf-8'))
 
