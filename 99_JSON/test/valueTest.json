@@ -3,9 +3,9 @@
     {
       "IP": "127.0.0.1",
       "Port": 50007,
-      "Protocol": "TCP",
+      "Protocol": "UDP",
       "pps": 1,
-      "isRandom": "no"
+      "pulsetime": 0
     }
   ],
   "Data": [
@@ -35,7 +35,8 @@
     },
     {
       "Type": "str",
-      "value": "Hi"
+      "value": "Hi",
+      "str len": 2
     }
   ]
 }

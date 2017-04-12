@@ -5,7 +5,7 @@
       "Port": 50007,
       "Protocol": "TCP",
       "pps": 1,
-      "isRandom": "no"
+      "pulsetime": 0
     }
   ]
 }

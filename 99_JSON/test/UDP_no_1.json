@@ -1,1 +1,1 @@
-{"Header":[{"IP":"127.0.0.1","Port":50007,"Protocol":"UDP","pps":1,"isRandom":"no"}],"Data":[{"Type":"int","value":1},{"Type":"float","value":3.14},{"Type":"str","value":"Hi"}]}
+{"Header":[{"IP":"127.0.0.1","Port":50007,"Protocol":"UDP","pps":1,"pulsetime":0}],"Data":[{"Type":"int","value":1},{"Type":"float","value":3.14},{"Type":"str","value":"Hi","str len":2}]}
