@@ -6,5 +6,8 @@ from transport import *
 from color import *
 from threading import Thread
 from log import *
-from rand import *
+from convert import *
 from verification import *
+from time import *
+from datetime import *
+from os import *
