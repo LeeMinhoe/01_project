@@ -19,8 +19,9 @@ def makelog(Pkt):
 	f.write(str(Pkt.Header_part.dst_ip) + " : " + str(Pkt.Header_part.dst_port) + " / " + str(Pkt.Header_part.protocol))
 	f.write("\n===== Detail Data =====\n")
 	for i in range(len(Pkt.Data_part.DataField)):
+		f.write("# \n")
 		for j in range(len(Pkt.Data_part.DataField[i])):
-			f.write(str(Pkt.Data_part.DataField[i][j]["value"]) + "( " + str(Pkt.Data_part.DataField[i][j]["Type"]) + " )\n")
+			f.write("	" + str(Pkt.Data_part.DataField[i][j]["value"]) + "( " + str(Pkt.Data_part.DataField[i][j]["Type"]) + " )\n")
 	f.write("=======================\n")
 	f.write('\n\n')
 
