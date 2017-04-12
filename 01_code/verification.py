@@ -164,8 +164,8 @@ def veri_type_checker(DataStructure):
 			
 			# not define variable
 			else :
-				print(Data["Type"])
-				print(Data["value"])
+				#print(Data["Type"])
+				#print(Data["value"])
 				printe("Not Define Variable")
 
 
@@ -268,8 +268,8 @@ def veri_range_checker(DataStructure):
 			# String NByte
 			elif Data["Type"] == "str":
 				if len(Data["value"]) > Data["str len"]:
-					print(Data["value"])
-					print(Data["str len"])
+					#print(Data["value"])
+					#print(Data["str len"])
 					printe("too long value")
 				elif len(Data["value"]) == Data["str len"]:
 					#print("not null packing")
@@ -282,8 +282,10 @@ def veri_range_checker(DataStructure):
 			# except struct in_addr, time, hex, Mac addr
 
 			else :
-				print(Data["Type"])
-				print(Data["value"])
+				#print(Data["Type"])
+				#print(Data["value"])
+				#print("not define " + Data["Type"] + "(" + str(Data["value"]) + ")" + "'s checking range")
+				pass
 
 			
 

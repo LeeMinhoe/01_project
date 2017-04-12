@@ -170,6 +170,65 @@ def send_packet_TCP_pk(Pkt):
 
 	s.close()
 #################################################################
+def send_packet_TCP_pulse(Pkt, t, sendPKTCount):
+
+	DataStructure = Pkt.Data_part.DataField
+
+	DS = []
+	for i in range(len(DataStructure)):
+		DS.append(Data_to_Pack(DataStructure[i]))
+	
+
+	# Error
+	# Undefined Data Type -> packing fail
+	if DS == False :
+		printe("mistaken file name : " + Pkt.Data_part.json_file_name)
+		exit(1)
+
+	HOST=Pkt.Header_part.dst_ip
+	PORT=Pkt.Header_part.dst_port
+	s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+	try:
+		s.connect((HOST,PORT))
+		
+		
+	except ConnectionRefusedError as e:
+		print()
+		printe(str(e))
+		print()
+		exit(1)
+		#printe("non 3-handshke / only send ack")
+
+	except TimeoutError as e:
+		print()
+		printe(str(e))
+		print()
+		exit(1)
+	
+	except OSError as e:
+		print()
+		printe(str(e))
+		print()
+		exit(1)
+	
+	for ds in DS:
+		roof = Pkt.Data_part.pps
+	
+		# Single Thread / Single Process
+		for i in range(0, roof):
+			sendPKTCount += 1
+			temp = t[sendPKTCount]
+			s.send(ds)
+			time.sleep(t[sendPKTCount])
+			#print(datetime.datetime.now())
+			for i in range(sendPKTCount ,len(t)):
+				t[i] = t[i] - temp
+			sendPKTCount += 1
+		
+
+	s.close()
+#################################################################
 
 
 def send_P_U(sock, data, HOST, PORT, roof):
@@ -224,3 +283,28 @@ def send_packet_UDP_pk(Pkt):
 			mt4.join()
 
 #################################################################
+
+def send_packet_UDP_pulse(Pkt, t, sendPKTCount):
+
+	DataStructure = Pkt.Data_part.DataField
+
+	DS = []
+	for i in range(len(DataStructure)):
+		DS.append(Data_to_Pack(DataStructure[i]))
+
+	HOST=Pkt.Header_part.dst_ip
+	PORT=Pkt.Header_part.dst_port
+	s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	
+	
+	roof = Pkt.Data_part.pps
+
+	for ds in DS:
+		for i in range(0, roof):
+			temp = t[sendPKTCount]
+			s.sendto(ds, (HOST, PORT))
+			time.sleep(t[sendPKTCount])
+			#print(datetime.datetime.now())
+			for i in range(sendPKTCount ,len(t)):
+				t[i] = t[i] - temp
+			sendPKTCount += 1
