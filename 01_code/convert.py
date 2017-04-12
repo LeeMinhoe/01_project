@@ -73,8 +73,8 @@ def RandToValue(DataStructure):
 			## is hex
 			elif (Data["Type"] == "hex"):
 				if Data["value"] == "Random":
-					print(Data["value"])
-					print(Data["Type"])
+					#print(Data["value"])
+					#print(Data["Type"])
 					Data["value"] = hex(random.randint(int(Data["random min"], 16), int(Data["random max"], 16)))
 					
 					
