@@ -21,14 +21,12 @@ class Packet_Header:
 # Packet의 데이터 관련 부분 Class
 class Packet_Data:
 	# 초기화
-	def __init__(self, pulsetime, pps, json_file_name, DataField):
-		self.pulsetime = pulsetime
+	def __init__(self, pps, json_file_name, DataField):
 		self.pps = int(pps)
 		self.json_file_name = json_file_name
 		self.DataField = DataField
 	# Packet Data info 출력문
 	def print_Data_info(self):
-		print("* pulse time : ", self.pulsetime)
 		print("* pps : ", self.pps)
 		print("* json_file_name : ", self.json_file_name)
 		print("* Data Field in Json")	
@@ -77,7 +75,6 @@ def inputModule(jsonf, d):
 		dst_ip = DataStructure["Header"][0]["IP"]
 		dst_port = DataStructure["Header"][0]["Port"]
 		protocol = DataStructure["Header"][0]["Protocol"]
-		pulsetime = DataStructure["Header"][0]["pulsetime"]
 		pps = DataStructure["Header"][0]["pps"]
 		
 
@@ -96,7 +93,7 @@ def inputModule(jsonf, d):
 			Data.append(DataStructure["Data"])
 	
 		header_p = Packet_Header(dst_ip, dst_port, protocol)
-		data_p = Packet_Data(pulsetime, pps, json_file_name, Data)
+		data_p = Packet_Data(pps, json_file_name, Data)
 		packet = Packet(header_p, data_p)
 		
 		return packet
