@@ -21,6 +21,7 @@ def run():
 	parser.add_option("-p", "--pulse", dest="steady", metavar="sec", type='float', help="input : float - steady pulse time (sec)")
 	parser.add_option("-r", "--random", dest="random", metavar="from to", type='int', nargs=2, help="input : int ,int - random pulse time range from (int) to (int)")
 	parser.add_option("-g", "--gauss", dest="gauss", metavar="avg sd", type='int', nargs = 2, help="input : int, int - Average, Standard Deviation / According to gaussian distributions")
+	parser.add_option("-l", dest="loof", action='store_true', help="if you using this option, Packet Scenario repeat")
 
 	(options, args) = parser.parse_args()
 	if len(sys.argv)-1 == 0:
