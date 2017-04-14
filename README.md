@@ -8,9 +8,7 @@
 
 ## Install
 `
-
 git clone git@github.com:LeeMinhoe/01_project.git
-
 `
 
  - How to execution : python3.5 main.py -f/m/d (Target) (-p/r/g arg) (-l)
@@ -65,10 +63,7 @@ python3.5 main.py -d directory name
 			"Type":"str",
 			"value":"Hi"
 		},
-
-
 		etc.....
-
 	]
 }
 '
