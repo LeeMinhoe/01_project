@@ -37,7 +37,7 @@ python3.5 main.py -d directory name
 	* 98_server Directory is Testing server program Directory 
 	* 99_JSON is Json file Directory 
 
- - Json file format :
+ - Json file format
 "'
 {
   "Header":
