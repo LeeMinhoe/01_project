@@ -38,34 +38,34 @@ python3.5 main.py -d directory name
 	* 99_JSON is Json file Directory 
 
  - Json file format
-
->{
->  "Header":
->  [
->    {
->      "IP":"127.0.0.1",
->      "Port":50007,
->      "Protocol":"TCP",
->      "pps":1
->    }
->  ],
->  "Data":
->  [
->    {
->      "Type":"int",		
->      "value":1		
->    },
->    {
->      "Type":"float",
->      "value":3.14
->    },
->    {
->      "Type":"str",
->      "value":"Hi"
->    },
->    etc.....
->  ]
->}
+>
+{
+  "Header":
+  [
+    {
+      "IP":"127.0.0.1",
+      "Port":50007,
+      "Protocol":"TCP",
+      "pps":1
+    }
+  ],
+  "Data":
+  [
+    {
+      "Type":"int",		
+      "value":1		
+    },
+    {
+      "Type":"float",
+      "value":3.14
+    },
+    {
+      "Type":"str",
+      "value":"Hi"
+    },
+    etc.....
+  ]
+}
 
 
 	1) IP is Logical address
