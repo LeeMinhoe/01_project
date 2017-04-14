@@ -1,12 +1,15 @@
 
-# project name : EventPacketGenerator ver 1.1.0
+# EventPacketGenerator ver 1.1.0
 
-- version is 1.1.0
 
 - Development Environment
 	* OS : centos 6.8
 	* PL : Python3.5
 
+## Install
+¡°`
+git clone git@github.com:LeeMinhoe/01_project.git
+¡°`
 
  - How to execution : python3.5 main.py -f/m/d $(Target) (-p/r/g arg) (-l)
 	1) single packet transport :
