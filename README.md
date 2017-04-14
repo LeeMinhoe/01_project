@@ -52,26 +52,32 @@ python3.5 main.py -d directory name
   "Data":
   [
      # bool type
+     1) really value : 1(True)
     { 
       "comment": "real value",
       "Type": "bool",
       "value": 1
     },
+     2) really value : 0(False)
     { 
-      "comment": "list",
+      "comment": "real value",
       "Type": "bool",
       "value": 0
     },
+     3) One value of the list 
     { 
       "comment": "list",
       "Type": "bool",
       "value": [1, 0]
     }
-
+     
+     # char type
+     1) really value : ASCii
     {
       "Type": "char",
       "value": "a"
     },
+     2) One value of the list
     { 
       "comment": "list",
       "Type": "char",
