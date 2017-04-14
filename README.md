@@ -51,19 +51,37 @@ python3.5 main.py -d directory name
   ],
   "Data":
   [
-    {
-      "Type":"int",		
-      "value":1		
+     # bool type
+    { 
+      "comment": "real value",
+      "Type": "bool",
+      "value": 1
     },
-    {
-      "Type":"float",
-      "value":3.14
+    { 
+      "comment": "list",
+      "Type": "bool",
+      "value": 0
     },
+    { 
+      "comment": "list",
+      "Type": "bool",
+      "value": [1, 0]
+    }
+
     {
-      "Type":"str",
-      "value":"Hi"
+      "Type": "char",
+      "value": "a"
     },
-    etc.....
+    { 
+      "comment": "list",
+      "Type": "char",
+      "value": [88, 89, 90]
+    }
+
+
+
+
+
   ]
 }
 ```
