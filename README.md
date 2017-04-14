@@ -40,31 +40,31 @@ python3.5 main.py -d directory name
  - Json file format :
 '
 {
-	"Header":
-	[
-		{
-			"IP":"127.0.0.1",
-			"Port":50007,
-			"Protocol":"TCP",
-			"pps":1
-		}
-	],
-	"Data":
-	[
-		{
-			"Type":"int",		
-			"value":1		
-		},
-		{
-			"Type":"float",
-			"value":3.14
-		},
-		{
-			"Type":"str",
-			"value":"Hi"
-		},
-		etc.....
-	]
+  "Header":
+  [
+    {
+      "IP":"127.0.0.1",
+      "Port":50007,
+      "Protocol":"TCP",
+      "pps":1
+    }
+  ],
+  "Data":
+  [
+    {
+      "Type":"int",		
+      "value":1		
+    },
+    {
+      "Type":"float",
+      "value":3.14
+    },
+    {
+      "Type":"str",
+      "value":"Hi"
+    },
+    etc.....
+  ]
 }
 '
 
