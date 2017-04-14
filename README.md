@@ -13,18 +13,24 @@ git clone git@github.com:LeeMinhoe/01_project.git
 
  - How to execution : python3.5 main.py -f/m/d $(Target) (-p/r/g arg) (-l)
 	1) single packet transport :
+
 `
 python3.5 main.py -f json.json
 `
+
 	2) multi packet transport :
+
 `
 python3.5 main.py -m directory name
 `
+
 	3) multi packet transport  :
 	(packets's destination is same)
+
 `
 python3.5 main.py -d directory name
 `
+
  - Directory Structure
 	* 01_code Directory is code 
 	* 98_server Directory is Testing server program Directory 
