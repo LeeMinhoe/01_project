@@ -8,10 +8,12 @@
 
 ## Install
 `
+
 git clone git@github.com:LeeMinhoe/01_project.git
+
 `
 
- - How to execution : python3.5 main.py -f/m/d $(Target) (-p/r/g arg) (-l)
+ - How to execution : python3.5 main.py -f/m/d (Target) (-p/r/g arg) (-l)
 1) single packet transport :
 
 `
@@ -33,12 +35,12 @@ python3.5 main.py -d directory name
 
  - Directory Structure
 	* 01_code Directory is code 
+	* 02_log Directory is log.txt directory
 	* 98_server Directory is Testing server program Directory 
 	* 99_JSON is Json file Directory 
 
  - Json file format :
-
-
+'
 {
 	"Header":
 	[
@@ -69,7 +71,7 @@ python3.5 main.py -d directory name
 
 	]
 }
-
+'
 
 	1) IP is Logical address
 	2) Port is port address
