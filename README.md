@@ -1,25 +1,27 @@
 
-- project name : EventPacketGenerator ver 1.0.0
-
-- version is 1.0.0
+# project name : EventPacketGenerator ver 1.1.0
+=================================================
+- version is 1.1.0
 
 - Development Environment
 	* OS : centos 6.8
 	* PL : Python3.5
+=================================================
 
-
- - How to execution : python3.5 main.py $(Target)
-	* $(Target) : 
-	1) single packet transport :		ex) python3.5 main.py json.json
-	  json.json is json file name
-	2) multi packet transport :		ex) python3.5 main.py json1.json json2.json json3.json
-	  json1, json2, json3 packet transport
-	3) *.json transport :			ex) python3.5 main.py *.json
-
-	  all json file in 99_JSON Directory
-	4) Target Directory transport :		ex) python3.5 main.py TCP
-	  TCP is Directory
-
+ - How to execution : python3.5 main.py -f/m/d $(Target) (-p/r/g arg) (-l)
+	1) single packet transport :
+¡°`
+python3.5 main.py -f json.json
+¡°`
+	2) multi packet transport :
+¡°`
+python3.5 main.py -m directory name
+¡°`
+	3) multi packet transport  :
+	(packets's destination is same)
+¡°`
+python3.5 main.py -d directory name
+¡°`
  - Directory Structure
 	* 01_code Directory is code 
 	* 98_server Directory is Testing server program Directory 
@@ -35,8 +37,7 @@
 			"IP":"127.0.0.1",
 			"Port":50007,
 			"Protocol":"TCP",
-			"pps":1,
-			"isRandom":"yes"
+			"pps":1
 		}
 	],
 	"Data":
