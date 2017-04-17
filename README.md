@@ -257,7 +257,7 @@ python3.5 main.py -d directory name
     {
       "comment": "1-2 v == l",
       "Type": "str",
-      "value": "ipplus",
+      "value": "packet",
       "str len": 6
     },
      2) str len > len(value) (NULL)
@@ -271,7 +271,7 @@ python3.5 main.py -d directory name
     {
       "comment": "2. list",
       "Type": "str",
-      "value": ["ipplus", "js", "JS"],
+      "value": ["packet", "js", "JS"],
       "str len": 6
     },
      4) len < value size random string (NULL)
