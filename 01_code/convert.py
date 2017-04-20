@@ -32,9 +32,9 @@ def RandToValue(DataStructure):
 			## is Integer
 			if (Data["Type"] == "short" or Data["Type"] == "unsigned short"
 			or Data["Type"] == "int" or Data["Type"] == "unsigned int"
-			or Data["Type"] == "long long") :
-				if Data["value"] == "Random":
-					Data["value"] = random.randint(Data["Random Min"], Data["Random Max"])
+			or Data["Type"] == "long long" or Data["Type"] == "unsigned long long") :
+				if Data["value"] == "random":
+					Data["value"] = random.randint(Data["random min"], Data["random max"])
 
 				elif type(Data["value"]) is int:
 					pass
@@ -54,8 +54,12 @@ def RandToValue(DataStructure):
 			
 			## is str
 			elif (Data["Type"] == "struct in_addr"):
-				if Data["value"] == "Random" :
-					Data["value"] = '.'.join('%s'%random.randint(0, 255) for i in range(4))
+				
+				if Data["value"].count("Random") :
+					if Data["value"][0] == 'B':	Data["value"] = 'B'
+					else : Data["value"] = ''
+					#print(Data["value"])
+					Data["value"] += '.'.join('%s'%random.randint(0, 255) for i in range(4))
 
 				elif Data["value"] == "random" :
 					min = int((binascii.hexlify(socket.inet_aton(Data["addr min"]))).decode(), 16)

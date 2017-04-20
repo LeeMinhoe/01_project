@@ -41,10 +41,12 @@ def veri_type_checker(DataStructure):
 				elif type(Data["value"]) is list:
 					#print("Interger List Ok")
 					pass
-				elif ( type(Data["value"]) is str and Data["value"] == "Random" ):
+				elif ( type(Data["value"]) is str and Data["value"] == "random" ):
 					#print("Input is Random")
 					pass
 				else :
+					print(Data["Type"])
+					print(Data["value"])
 					printe("Integer input is wrong")				
 					
 			# bool 1Byte
@@ -164,8 +166,8 @@ def veri_type_checker(DataStructure):
 			
 			# not define variable
 			else :
-				#print(Data["Type"])
-				#print(Data["value"])
+				print(Data["Type"])
+				print(Data["value"])
 				printe("Not Define Variable")
 
 

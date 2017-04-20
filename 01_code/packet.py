@@ -17,6 +17,7 @@ class Packet_Header:
 		print("* protocol : ", self.protocol)
 #############################################################
 
+
 #############################################################
 # Packet의 데이터 관련 부분 Class
 class Packet_Data:
@@ -55,6 +56,7 @@ class Packet:
 		self.Header_part.print_Header_info()
 		self.Data_part.print_Data_info()
 #############################################################
+
 
 #############################################################
 # Json file 에서 패킷 정보를 읽어오는 함수

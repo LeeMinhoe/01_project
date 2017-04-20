@@ -56,7 +56,12 @@ def Data_to_Pack(Json):
 		
 		# user define
 		elif( Json[i]["Type"] == "struct in_addr"):
-			result += socket.inet_aton(Json[i]["value"])
+			if Json[i]["value"][0] == 'B':
+				#print(Json[i]["value"][1:])
+				result += struct.pack("!L", struct.unpack("<L", socket.inet_aton(Json[i]["value"][1:]))[0])
+			else :
+				#print(Json[i]["value"])
+				result += socket.inet_aton(Json[i]["value"])
 		
 		elif( Json[i]["Type"] == "time"):
 			#if type(Json[i]["value"]) is str:
@@ -65,7 +70,7 @@ def Data_to_Pack(Json):
 			#elif type(Json[i]["value"]) is int :
 			#	datet = Json[i]["value"]
 			#result += struct.pack('<i', datet)
-			result += struct.pack('<i', Json[i]["value"])
+			result += struct.pack('<l', Json[i]["value"])
 			
 		elif( Json[i]["Type"] == "hex"):
 			d = int(Json[i]["value"], 16)
@@ -178,6 +183,7 @@ def send_packet_TCP_pulse(Pkt, t, sendPKTCount):
 	for i in range(len(DataStructure)):
 		DS.append(Data_to_Pack(DataStructure[i]))
 	
+
 
 	# Error
 	# Undefined Data Type -> packing fail
